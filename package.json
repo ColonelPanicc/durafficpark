@@ -2,15 +2,13 @@
   "name": "frontend",
   "version": "1.0.0",
   "description": "Web frontend",
-  "main": "index.js",
+  "main": "frontend/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 0",
-    "start": "node index.js"
+    "start": "cd frontend && npm install && npm start"
   },
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "express": "^4.16.2",
-    "expressjs": "^1.0.1"
   }
 }
