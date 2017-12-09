@@ -2,6 +2,7 @@ package com.durafficpark.Traffic;
 
 import java.util.ArrayList;
 import java.util.List;
+import Jama.Matrix;
 
 public class Controller {
 
@@ -11,7 +12,7 @@ public class Controller {
     private float a,b,c;
 
     public Controller(float a, float b, float c){
-        cars = new ArrayList<>();
+        cars = new ArrayList<Car>();
         this.a = a;
         this.b = b;
         this.c = c;
