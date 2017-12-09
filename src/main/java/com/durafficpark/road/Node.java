@@ -27,7 +27,7 @@ public class Node {
 
     // define and add a new road to the set of adjacent roads
     public void addRoad(Node endNode, double distance, double speedLimit){
-        adjacentRoads.add(new Road(endNode, distance, speedLimit));
+        adjacentRoads.add(new Road(this, endNode, distance, speedLimit));
     }
 
     public double getLatitude() {
