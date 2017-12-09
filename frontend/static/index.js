@@ -31,6 +31,24 @@ $(document).ready(function() {
         corner1, corner2
     ], {color: "#7E317B", fill:false, weight: 4}).addTo(map);
 
+    // On-road 'heatmap' drawing
+    function drawHeat(nodeA, nodeB, heat) {
+        // Assuming heat > 0.9, make red
+        var hue = 0;
+        if (heat <= 0.4) {
+            // If heat < 0.4, make green
+            hue = 110;
+        } else if (heat < 0.9) {
+            // If 0.4 < heat < 0.9, linearly interpolate hue
+            hue = Math.round(180 - 200 * heat)
+        }
+        // Draw road with relevant colour
+        L.polyline([
+            nodeA, nodeB
+        ], {color: "hsl(" + hue + ",100%,50%)"}).addTo(map);
+    }
+    // drawHeat(corner1, center, 0.6);
+
     $('#start-simulation').on('click', function() {
         console.log("Start sim button clicked");
         server.emit('sim-start', JSON.stringify(SIM_SETTINGS));
