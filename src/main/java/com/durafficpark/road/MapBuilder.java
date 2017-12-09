@@ -4,7 +4,10 @@ import com.durafficpark.Traffic.Map;
 import com.durafficpark.osm.OSMNode;
 import com.durafficpark.osm.OSMObject;
 import com.durafficpark.osm.OSMWay;
+import com.google.gson.Gson;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 // builds a full set of map data, using a defined set of osm object
@@ -44,11 +47,31 @@ public class MapBuilder {
                 osmWays.add((OSMWay) osmObject);
         }
 
+        int counter = 0;
+        int percentage = -1;
+
+        Gson gson = new Gson();
+
+        FileWriter fileWriter = null;
+
+        try {
+            fileWriter = new FileWriter("/Users/georgeprice/Documents/GitHub/durafficpark/ollie_roads.json");
+        }
+        catch (IOException e){
+            System.err.println(e.getMessage());
+        }
+
         // iterate over all of the ways
         for(OSMWay way : osmWays){
 
+            if((int)(counter/osmWays.size()) != percentage){
+                percentage = (int)(counter/osmWays.size());
+                System.out.println(String.format(" > %d %% complete", (counter/osmWays.size())));
+            }
+
             // get the ordered ways for the road
             ArrayList<String> wayNodes = way.getNodes();
+
 
             // iterate through all of the node ids in the way
             for (int i = 0; i < wayNodes.size()-1; i++) {
@@ -68,9 +91,26 @@ public class MapBuilder {
                     Node aNode = new Node(aOSMNode.getLat(), aOSMNode.getLon());
                     Node bNode = new Node(bOSMNode.getLat(), bOSMNode.getLon());
 
-                    // and save them to our arraylist of nodes
-                    nodes.add(aNode);
-                    nodes.add(bNode);
+                    // if we already have stored this osm node (matching lat and lon), then we just need to update...
+                    if(nodes.contains(aNode)){
+                        aNode = nodes.get(nodes.indexOf(aNode));
+                    }
+
+                    // otherwise, this is the first time we have processed this osm node and so we should save it
+                    else {
+                        nodes.add(aNode);
+                    }
+
+                    // same as above!
+                    if(nodes.contains(bNode)){
+                        bNode = nodes.get(nodes.indexOf(bNode));
+                    }
+                    else {
+                        nodes.add(bNode);
+                    }
+
+                    // System.out.println(" > Node a; "+aNode);
+                    // System.out.println(" > Node b; "+bNode);
 
                     // calculate the distance between the two roads (using the haversine formula)
                     double roadDistance = calcDistance(aNode, bNode);
@@ -106,24 +146,67 @@ public class MapBuilder {
 
                     // now, we construct the road...
 
+                    ArrayList<String> roadStrings = new ArrayList<>();
+
+
                     // add a road per lane for each of the two points
                     for (int j = 0; j < lanes; j++) {
-                        roads.add(new Road(aNode, bNode, roadDistance, speedLimit));
+                        Road road = new Road(aNode, bNode, roadDistance, speedLimit);
+                        roads.add(road);
+                        String roadStr = gson.toJson(road);
+                        roadStrings.add(roadStr);
+
                     }
 
                     // if it's two way, then we need to add the road going the other direction
                     if(! oneWay){
                         for (int j = 0; j < lanes; j++) {
-                            roads.add(new Road(bNode, aNode, roadDistance, speedLimit));
+                            Road road = new Road(bNode, aNode, roadDistance, speedLimit);
+                            roads.add(road);
+                            String roadStr = gson.toJson(road);
+                            roadStrings.add(roadStr);
                         }
                     }
+
+                    for(String roadStr : roadStrings) {
+                        try {
+                            fileWriter.write(roadStr+"\n");
+                        } catch (IOException e) {
+
+                        }
+                    }
+
                 }
                 else {
                     System.out.println("[!] Could not find the Node as part of this way");
                 }
-            }
 
+                counter++;
+            }
         }
+
+        try {
+            fileWriter.close();
+        }
+        catch (IOException e){
+            System.err.println(e.getMessage());
+        }
+
+        try {
+            fileWriter = new FileWriter("/Users/georgeprice/Documents/GitHub/durafficpark/ollie_nodes.json");
+            for (Node node: nodes) {
+                String roadStr = gson.toJson(node);
+                fileWriter.write(roadStr+"\n");
+            }
+        }
+        catch (IOException e){
+            System.err.println(e.getMessage());
+        }
+
+
+
+        System.out.println(" > FINAL NODE COUNT; "+nodes.size());
+        System.out.println(" > FINAL ROAD COUNT; "+roads.size());
 
         // you may be asking why I left this step until now, and bothered with separating them into nodes and roads
         // well, we don't know whether Ollie needs just nodes, or just nodes, or just all of it!
