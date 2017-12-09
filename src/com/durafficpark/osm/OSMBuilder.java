@@ -4,7 +4,6 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Set;
 
 // creates an OSMObject using a json file / element
 public class OSMBuilder {
