@@ -1,8 +1,8 @@
 var express = require("express");
 var path = require("path");
 var app = express();
-var server = require("http").createServer(app);
-var io = require("socket.io")(server);
+var server = require("http").Server(app);
+var io = require("socket.io").listen(server);
 var simulationServer = require('socket.io-client')('http://localhost:4000');
 var currentDirectory = process.env.PORT ? process.cwd() : __dirname;
 
@@ -19,12 +19,14 @@ app.get("*", function(req, res) {
     res.status(404).send("File not found");
 });
 
-app.listen(app.get("port"), function() {
+server.listen(app.get("port"), function() {
     console.log("Server started on port " + app.get("port"));
 });
 
 // --------- Socket IO Stuff ------------
-
 io.on("connection", function(client) {
-    console.log("Client Connected");
+    console.log("Connection");
+    client.on("sim-start", function(data) {
+        console.log("Sim start");
+    });
 });

@@ -6,7 +6,7 @@ $(document).ready(function() {
 
     // Domain and Socket IO stuff
     var currentDomain = window.location.origin;
-    var server = io(currentDomain);
+    var server = io();
 
     var map = L.map("mapElement").setView([54.77525, -1.584851], 13);
     L.tileLayer("http://{s}.tile.osm.org/{z}/{x}/{y}.png", {
@@ -16,7 +16,8 @@ $(document).ready(function() {
 
 
     $('#start-simulation').on('click', function() {
-        server.emit('sim-start', SIM_SETTINGS);
+        console.log("Start sim button clicked");
+        server.emit('sim-start', JSON.stringify(SIM_SETTINGS));
     });
 
 
