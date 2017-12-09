@@ -110,7 +110,7 @@ public class OSMFileParser extends DefaultHandler {
     }
 
     public static void main(String args[]){
-        OSMFileParser parser = new OSMFileParser(new File("/Users/georgeprice/Documents/GitHub/durafficpark/src/main/java/parsing/north-yorkshire-latest.osm"));
+        OSMFileParser parser = new OSMFileParser(new File("/Users/georgeprice/Downloads/map.osm"));
 
         try {
             parser.startDocument();
