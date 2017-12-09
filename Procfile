@@ -1,2 +1,2 @@
 web: npm start
-worker: java $JAVA_OPTS -cp target/classes:target/dependency/* com.durafficpark.Main
+worker: java -jar target/dependency/webapp-runner.jar
