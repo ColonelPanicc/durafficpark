@@ -14,6 +14,9 @@ $(document).ready(function() {
     var bounds = L.latLngBounds(corner1, corner2);
     var center = L.latLng((corner1.lat + corner2.lat) / 2, (corner1.lng + corner2.lng)/2);
 
+    // Store polylines to be able to remove them later
+    var polylines = [];
+
     // Initialise map element with location bounds
     var map = L.map("mapElement", {
         maxBounds: bounds
@@ -37,17 +40,59 @@ $(document).ready(function() {
         var hue = 0;
         if (heat <= 0.4) {
             // If heat < 0.4, make green
-            hue = 110;
+            hue = 100;
         } else if (heat < 0.9) {
             // If 0.4 < heat < 0.9, linearly interpolate hue
             hue = Math.round(180 - 200 * heat)
         }
         // Draw road with relevant colour
-        L.polyline([
+        return L.polyline([
             nodeA, nodeB
-        ], {color: "hsl(" + hue + ",100%,50%)"}).addTo(map);
+        ], {
+            color: "hsl(" + hue + ",100%,50%)"
+        });
     }
-    // drawHeat(corner1, center, 0.6);
+
+    // Draw each road within a timeframe
+    function drawTimeframe(timeframe) {
+        // Remove existing polylines from map
+        for (var i = 0; i < polylines.length; i++) {
+            map.removeLayer(polylines[i]);
+        }
+
+        // Forget the removed polylines
+        polylines = [];
+
+        // Define polylines for this timeframe
+        for (var i = 0; i < timeframe.heats.length; i++) {
+            var nodeA = timeframe.heats[i].nodeA;
+            var nodeB = timeframe.heats[i].nodeB;
+            var heat = timeframe.heats[i].heat;
+            polylines.push(drawHeat(nodeA, nodeB, heat));
+        }
+
+        // Actually display these polylines
+        for (var i = 0; i < polylines.length; i++) {
+            map.addLayer(polylines[i]);
+        }
+    }
+
+    // Example timeframe drawing
+    var timeframe = {
+        heats: [
+            {
+                nodeA: corner1,
+                nodeB: center,
+                heat: 0.4
+            },
+            {
+                nodeA: corner2,
+                nodeB: center,
+                heat: 0.7
+            }
+        ]
+    }
+    drawTimeframe(timeframe);
 
     $('#start-simulation').on('click', function() {
         console.log("Start sim button clicked");
