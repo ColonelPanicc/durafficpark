@@ -17,6 +17,10 @@ public abstract class OSMObject {
         gson = new Gson();
     }
 
+    public String getId() {
+        return id;
+    }
+
     public HashMap<String, Object> getTags() {
         return tags;
     }
