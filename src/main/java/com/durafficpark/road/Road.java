@@ -2,6 +2,7 @@ package com.durafficpark.road;
 
 import com.durafficpark.Traffic.Car;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 // the distance to a specific node with the distance for it, start node is the node that holds this
@@ -12,14 +13,14 @@ public class Road {
     private double distance;    // the total length of the road, in metres
     private double speedLimit;  // the speed limit for this road, in m/s
 
-    private HashMap<Car, Double> cars;  // the cars on the road, with (key, displacement) values
+    private ArrayList<Car> cars;
 
     public Road(Node startNode, Node endNode, double distance, double speedLimit){
         this.startNode = startNode;
         this.endNode = endNode;
         this.distance = distance;
         this.speedLimit = speedLimit;
-        cars = new HashMap<>();
+        cars = new ArrayList<>();
     }
 
     public Node getStartNode() {
@@ -54,11 +55,11 @@ public class Road {
         this.speedLimit = speedLimit;
     }
 
-    public HashMap<Car, Double> getCars() {
+    public ArrayList<Car> getCars() {
         return cars;
     }
 
-    public void setCars(HashMap<Car, Double> cars) {
+    public void setCars(ArrayList<Car> cars) {
         this.cars = cars;
     }
 }

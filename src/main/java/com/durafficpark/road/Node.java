@@ -1,6 +1,7 @@
 package com.durafficpark.road;
 
 import java.util.ArrayList;
+import java.util.List;
 
 // a node on the map, with the available nodes that can be traversed to from this node
 public class Node {
@@ -36,6 +37,10 @@ public class Node {
 
     public double getLongitude() {
         return longitude;
+    }
+
+    public List<Road> getAdjacentRoads(){
+        return adjacentRoads;
     }
 
     @Override
