@@ -13,6 +13,9 @@ import org.json.simple.JSONObject;
 import static com.mongodb.client.model.Filters.*;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
 public class BoundingBoxNodes {
@@ -26,11 +29,10 @@ public class BoundingBoxNodes {
         this.database = mongoClient.getDatabase("durassic-park");
     }
 
-    public ArrayList<JSONObject> getWithinBoundingBox(double left, double right, double top, double bottom) {
-        ArrayList<JSONObject> finalList = new ArrayList<>();
+    public List<JSONObject> getWithinBoundingBox(double left, double right, double top, double bottom) {
+        List<JSONObject> finalList = Collections.synchronizedList(new ArrayList<>());
 
-        MongoCollection<Document> nodeCollection = this.database.getCollection("nodes");
-        MongoCollection<Document> waysCollection = this.database.getCollection("ways");
+        MongoCollection<Document> roadsNodes = this.database.getCollection("ollie_roads");
 
         Block<Document> getBlock = new Block<Document>() {
             @Override
@@ -49,9 +51,9 @@ public class BoundingBoxNodes {
             }
         };
 
-        nodeCollection.find(and(gte("lat", left), lte("lat", right), gte("lon", bottom), lte("lon", top))).
-                forEach(getBlock, callbackWhenFinished);
-        waysCollection.find().forEach(getBlock, callbackWhenFinished);
+        roadsNodes.find(and(gte("startNode.latitude", left), lte("startNode.latitude", right), gte("startNode.longitude", bottom), lte("startNode.longitude", top),
+                        gte("startNode.latitude", left), lte("startNode.latitude", right), gte("startNode.longitude", bottom), lte("startNode.longitude", top))).
+                        forEach(getBlock, callbackWhenFinished);
 
         try {
             latch.await();
