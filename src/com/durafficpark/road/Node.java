@@ -3,7 +3,7 @@ package com.durafficpark.road;
 import java.util.ArrayList;
 
 // a node on the map, with the available nodes that can be traversed to from this node
-public class Node {
+public class Node implements MapObject {
 
     // the unique (hopefully!) latitude and longitude coordinates for this point
     private double latitude;
@@ -27,7 +27,7 @@ public class Node {
 
     // define and add a new road to the set of adjacent roads
     public void addRoad(Node endNode, double distance, double speedLimit){
-        adjacentRoads.add(new Road(endNode, distance, speedLimit));
+        adjacentRoads.add(new Road(this, endNode, distance, speedLimit));
     }
 
     public double getLatitude() {

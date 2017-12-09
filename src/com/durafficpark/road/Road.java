@@ -5,19 +5,29 @@ import com.durafficpark.Traffic.Car;
 import java.util.HashMap;
 
 // the distance to a specific node with the distance for it, start node is the node that holds this
-public class Road {
+public class Road implements MapObject {
 
+    private Node startNode; // the start node which the road begins at
     private Node endNode;    // the next node which this road ends at
     private double distance;    // the total length of the road, in metres
     private double speedLimit;  // the speed limit for this road, in m/s
 
     private HashMap<Car, Double> cars;  // the cars on the road, with (key, displacement) values
 
-    public Road(Node endNode, double distance, double speedLimit){
+    public Road(Node startNode, Node endNode, double distance, double speedLimit){
+        this.startNode = startNode;
         this.endNode = endNode;
         this.distance = distance;
         this.speedLimit = speedLimit;
         cars = new HashMap<>();
+    }
+
+    public Node getStartNode() {
+        return startNode;
+    }
+
+    public void setStartNode(Node startNode) {
+        this.startNode = startNode;
     }
 
     public Node getEndNode() {
