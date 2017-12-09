@@ -18,18 +18,26 @@ public class Controller {
         this.a = a;
         this.b = b;
         this.c = c;
-        M = new Matrix(new double[][]{{1, dt, dt*dt/2},
+        M = new Matrix(new double[][]{  {1, dt, dt*dt/2},
                                         {0, 1, dt},
                                         {0, 0, 0}});
-
     }
 
     private void runStep(){
-        //TODO get acceleration for each vehicle
+        cars.parallelStream().forEach(car -> {
+            Car carInfront = getCarInfront(car);
+            double s = carInfront.pos.get(0, 0) - car.pos.get(0, 0) - carInfront.length;
+            car.pos.set(2, 0, F(car.pos.get(1,0), carInfront.pos.get(1,0), s));
+        });
         applyMatrix();
     }
 
-    private float F(float v, float vFollowing, float s){
+    private Car getCarInfront(Car car){
+        //TODO get Car
+        return null;
+    }
+
+    private double F(double v, double vFollowing, double s){
         return a*(Math.abs(s) - (c * v)) + b*(vFollowing - v);
     }
 
