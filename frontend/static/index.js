@@ -6,7 +6,7 @@ $(document).ready(function() {
 
     // Domain and Socket IO stuff
     var currentDomain = window.location.origin;
-    var server = io(currentDomain);
+    var server = io();
 
     var corner1 = L.latLng(54.7831, -1.6016),
     corner2 = L.latLng(54.7609, -1.5445),
@@ -23,7 +23,8 @@ $(document).ready(function() {
 
 
     $('#start-simulation').on('click', function() {
-        server.emit('sim-start', SIM_SETTINGS);
+        console.log("Start sim button clicked");
+        server.emit('sim-start', JSON.stringify(SIM_SETTINGS));
     });
 
 
