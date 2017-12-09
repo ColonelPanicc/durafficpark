@@ -1,0 +1,17 @@
+#mapWrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#mapElement {
+    width: 97%;
+}
+
+.fullHeight {
+    height: 97%;
+}
+
+#locationSelector {
+    display: block;
+}

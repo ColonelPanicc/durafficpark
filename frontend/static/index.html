@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html class="fullHeight">
+
+<head>
+    <meta charset="utf-8">
+    <title>Duraffic Park</title>
+
+    <!-- jquery -->
+    <script src="jquery/jquery.min.js"></script>
+    <!-- bootstrap -->
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+    <!-- leaflet -->
+    <link rel="stylesheet" href="leaflet/leaflet.css">
+    <script src="leaflet/leaflet.js"></script>
+    <!-- socket.io -->
+    <script type="text/javascript" src="socketio/socket.io.js"></script>
+    <!-- our own -->
+    <link rel="stylesheet" type="text/css" href="index.css">
+    <script type="text/javascript" src="index.js"></script>
+</head>
+
+<body class="fullHeight">
+    <div class="navbar navbar-inverse navbar-static-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                <a class="navbar-brand" href="#">Duraffic Park</a>
+            </div>
+            <div class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="#">Home</a></li>
+                    <li><a href="https://github.com/OliMac1/durafficpark/" target="_blank ">Fork Me</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid fullHeight">
+        <div class="row fullHeight">
+            <div class="col-sm-8 fullHeight" id="mapPanelWrap">
+                <div class="panel panel-default fullHeight">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Map</h3>
+                    </div>
+                    <div class="panel-body fullHeight">
+                        <div class="container-fluid fullHeight" id="mapWrap">
+                            <div class="fullHeight" id="mapElement"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4" id="controlsPanelWrap">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Control Panel</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label for="locationSelector">Simulation Location</label>
+                            <div class="btn-group" id="locationSelector">
+                                <button type="button" class="btn btn-default disabled">Durham</button>
+                                <button type="button" class="btn btn-default dropdown-toggle disabled" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="caret"></span>
+                                <span class="sr-only">Toggle Dropdown</span>
+                            </button>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#">Durham</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <br/>
+                        <br/>
+                        <button type="button" class="btn btn-primary" id="start-simulation">Start Simulation</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
