@@ -34,6 +34,19 @@
             <artifactId>netty-socketio</artifactId>
             <version>1.7.12</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.mongodb</groupId>
+            <artifactId>mongodb-driver</artifactId>
+            <version>3.6.0</version>
+        </dependency>
+
+        <!--- http://mongodb.github.io/mongo-java-driver/3.6/driver-async/getting-started/installation/ -->
+        <dependency>
+            <groupId>org.mongodb</groupId>
+            <artifactId>mongodb-driver-async</artifactId>
+            <version>3.6.0</version>
+        </dependency>
     </dependencies>
 
     <build>
