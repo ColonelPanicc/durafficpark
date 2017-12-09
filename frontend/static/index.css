@@ -8,10 +8,19 @@
     width: 97%;
 }
 
+#locationSelector {
+    display: block;
+}
+
 .fullHeight {
     height: 97%;
 }
 
-#locationSelector {
-    display: block;
+.palatinate{
+    color: #ffd700 !important;
+    background-color: #7e317b !important;
+}
+
+.active>.palatinate{
+    background-color: #59233c !important;
 }
