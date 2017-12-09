@@ -1,8 +1,7 @@
-package com.durraficpark.osm;
+package com.durafficpark.osm;
 
-import org.json.simple.JSONObject;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import org.json.simple.JSONObject;
 
 import java.util.HashMap;
 

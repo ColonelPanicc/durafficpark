@@ -1,12 +1,12 @@
-package com.durraficpark;
+package com.durafficpark;
 
+import com.durafficpark.osm.OSMNode;
+import com.durafficpark.osm.OSMObject;
+import com.durafficpark.osm.OSMWay;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.DefaultHandler;
-import parsing.osm.OSMNode;
-import parsing.osm.OSMObject;
-import parsing.osm.OSMWay;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;

@@ -1,4 +1,4 @@
-package com.durraficpark.osm;
+package com.durafficpark.osm;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;

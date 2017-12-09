@@ -1,6 +1,5 @@
-package com.durraficpark.osm;
+package com.durafficpark.osm;
 
-import com.google.gson.InstanceCreator;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
