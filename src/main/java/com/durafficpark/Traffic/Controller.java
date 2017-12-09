@@ -3,6 +3,7 @@ package com.durafficpark.Traffic;
 import java.util.ArrayList;
 import java.util.List;
 import Jama.Matrix;
+import com.durafficpark.road.Road;
 
 public class Controller {
 
@@ -34,6 +35,8 @@ public class Controller {
 
     private Car getCarInfront(Car car){
         //TODO get Car
+        Road road = car.getRoad();
+        List<Car> cars = road.getCars();
         return null;
     }
 
