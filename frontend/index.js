@@ -3,6 +3,7 @@ var path = require("path");
 var app = express();
 var server = require("http").createServer(app);
 var io = require("socket.io")(server);
+var simulationServer = require('socket.io-client')('http://localhost:4000');
 var currentDirectory = process.env.PORT ? process.cwd() : __dirname;
 
 app.set("port", process.env.PORT || 3000);
