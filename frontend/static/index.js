@@ -12,10 +12,13 @@ $(document).ready(function() {
     var corner1 = L.latLng(54.7831, -1.6016);
     var corner2 = L.latLng(54.7609, -1.5445);
     var bounds = L.latLngBounds(corner1, corner2);
-    var center = L.latLng((corner1.lat + corner2.lat) / 2, (corner1.lng + corner2.lng)/2);
+    var center = L.latLng((corner1.lat + corner2.lat) / 2, (corner1.lng + corner2.lng) / 2);
 
     // Store polylines to be able to remove them later
     var polylines = [];
+
+    // Store a history of frametimes
+    var frametimes = [];
 
     // Initialise map element with location bounds
     var map = L.map("mapElement", {
@@ -94,12 +97,13 @@ $(document).ready(function() {
     }
     drawTimeframe(timeframe);
 
-    $('#start-simulation').on('click', function() {
+    $("#start-simulation").on("click", function() {
         console.log("Start sim button clicked");
-        server.emit('sim-start', JSON.stringify(SIM_SETTINGS));
+        server.emit("sim-start", JSON.stringify(SIM_SETTINGS));
     });
 
-    server.on('sim-client-update', function(data) {
-        // todo display
+    server.on("sim-client-update", function(data) {
+        console.log("sim-client-update", data);
+        // TODO save received frametime(s) to history
     });
 });
