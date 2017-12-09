@@ -3,7 +3,7 @@ var path = require("path");
 var app = express();
 var server = require("http").Server(app);
 var io = require("socket.io").listen(server);
-var simulationServer = require('socket.io-client')('http://localhost:9000');
+var simulationServer = require('socket.io-client')('http://localhost:9010');
 var currentDirectory = process.env.PORT ? process.cwd() : __dirname;
 
 app.set("port", process.env.PORT || 3000);
@@ -25,10 +25,7 @@ server.listen(app.get("port"), function() {
 
 
 function bundleRequestToSend(client, data) {
-    return JSON.stringify({
-        "client": client.id,
-        "payload": data
-    });
+    return "lol"
 }
 
 // --------- Socket IO Stuff ------------
@@ -36,14 +33,13 @@ io.on("connection", function(client) {
     client.on("sim-start", function(data) {
         var payload = bundleRequestToSend(client, data);
         console.log("Sim start");
-        simulationServer.emit("sim-start", payload);
-        console.log(payload);
+        simulationServer.emit("sim-start", "lol");
+    });
+//});
+
+    client.on("test-return", function(data) {
+      console.log(data.client);
+      console.log("Server returns");
+      console.log(data);
     });
 });
-
-simulationServer.on("test-return", function(data) {
-    console.log(data.client);
-    console.log("Server returns");
-    console.log(data);
-});
-

@@ -6,16 +6,14 @@ public class Main {
     public static void main(String args[]) {
         Configuration config = new Configuration();
         config.setHostname("localhost");
-        config.setPort(9000);
+        config.setPort(9010);
 
         SocketIOServer server = new SocketIOServer(config);
 
         server.addEventListener("sim-start", ProcessCommandObject.class,
                 (client, command, ackRequest) -> {
-                    String jsonSettings = command.getJSONInput();
-                    System.out.println(jsonSettings);
-                    System.out.println("Java Server Start Simulation");
-                    client.sendEvent("test-return", jsonSettings);
+//           System.out.println("Java Server Start Simulation");
+                    client.sendEvent("test-return", "lol");
                 });
 
         try {
