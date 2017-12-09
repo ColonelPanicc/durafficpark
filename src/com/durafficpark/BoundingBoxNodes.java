@@ -29,8 +29,9 @@ public class BoundingBoxNodes {
     public ArrayList<JSONObject> getWithinBoundingBox(double left, double right, double top, double bottom) {
         ArrayList<JSONObject> finalList = new ArrayList<>();
 
-        MongoCollection<Document> nodeCollection = this.database.getCollection("nodes");
-        MongoCollection<Document> waysCollection = this.database.getCollection("ways");
+//        MongoCollection<Document> nodeCollection = this.database.getCollection("nodes");
+//        MongoCollection<Document> waysCollection = this.database.getCollection("ways");
+        MongoCollection<Document> new_data = this.database.getCollection("ollie_roads");
 
         Block<Document> getBlock = new Block<Document>() {
             @Override
@@ -49,9 +50,11 @@ public class BoundingBoxNodes {
             }
         };
 
-        nodeCollection.find(and(gte("lat", left), lte("lat", right), gte("lon", bottom), lte("lon", top))).
+//        nodeCollection.find(and(gte("lat", left), lte("lat", right), gte("lon", bottom), lte("lon", top))).
+//                forEach(getBlock, callbackWhenFinished);
+//        waysCollection.find().forEach(getBlock, callbackWhenFinished);
+        new_data.find(and(gte("lat", left), lte("lat", right), gte("lon", bottom), lte("lon", top))).
                 forEach(getBlock, callbackWhenFinished);
-        waysCollection.find().forEach(getBlock, callbackWhenFinished);
 
         try {
             latch.await();
