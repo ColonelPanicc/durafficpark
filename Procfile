@@ -1,2 +1,2 @@
-web: node frontend/index.js
+web: npm start
 
