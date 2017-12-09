@@ -1,7 +1,24 @@
 package com.durafficpark.Traffic;
 
-/**
- * Created by olivermcleod on 09/12/2017.
- */
+import java.util.ArrayList;
+import java.util.List;
+
 public class Controller {
+
+    private List<Car> cars;
+    private Map map;
+
+    private float a,b,c;
+
+    public Controller(float a, float b, float c){
+        cars = new ArrayList<>();
+        this.a = a;
+        this.b = b;
+        this.c = c;
+    }
+
+    private float F(float v, float vFollowing, float s){
+        return a*(Math.abs(s) - (c * v)) + b*(vFollowing - v);
+    }
+
 }
