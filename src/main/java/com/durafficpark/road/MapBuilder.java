@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class MapBuilder {
 
     // produces a full set of nodes
-    public static ArrayList<MapObject> buildMap(ArrayList<OSMObject> osmObjects){
+    public static ArrayList<Road> buildMap(ArrayList<OSMObject> osmObjects){
         /*
             I'm gonna go ahead and explain how this works so that you can understand it because it's fair dirty
             - iterate through all of the osm objects that we made from the json data
@@ -128,11 +128,7 @@ public class MapBuilder {
         // you may be asking why I left this step until now, and bothered with separating them into nodes and roads
         // well, we don't know whether Ollie needs just nodes, or just nodes, or just all of it!
         // so, I'm just gonna give him it all and let him deal with it! :)
-        ArrayList<MapObject> mapObjects = new ArrayList<>();
-        mapObjects.addAll(nodes);
-        mapObjects.addAll(roads);
-
-        return mapObjects;
+        return roads;
     }
 
     // calculates the distance (IN METRES) between two nodes

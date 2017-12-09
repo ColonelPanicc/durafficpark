@@ -5,7 +5,7 @@ import com.durafficpark.Traffic.Car;
 import java.util.HashMap;
 
 // the distance to a specific node with the distance for it, start node is the node that holds this
-public class Road implements MapObject {
+public class Road {
 
     private Node startNode; // the start node which the road begins at
     private Node endNode;    // the next node which this road ends at

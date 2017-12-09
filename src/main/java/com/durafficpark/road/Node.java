@@ -3,7 +3,7 @@ package com.durafficpark.road;
 import java.util.ArrayList;
 
 // a node on the map, with the available nodes that can be traversed to from this node
-public class Node implements MapObject {
+public class Node {
 
     // the unique (hopefully!) latitude and longitude coordinates for this point
     private double latitude;
