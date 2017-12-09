@@ -59,7 +59,22 @@
                         <h3 class="panel-title">Control Panel</h3>
                     </div>
                     <div class="panel-body">
-                        <button type="button" class="btn btn-primary" id="start-simulation">Start Simulation </button>
+                        <div class="form-group">
+                            <label for="locationSelector">Simulation Location</label>
+                            <div class="btn-group" id="locationSelector">
+                                <button type="button" class="btn btn-default disabled">Durham</button>
+                                <button type="button" class="btn btn-default dropdown-toggle disabled" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="caret"></span>
+                                <span class="sr-only">Toggle Dropdown</span>
+                            </button>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#">Durham</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <br/>
+                        <br/>
+                        <button type="button" class="btn btn-primary" id="start-simulation">Start Simulation</button>
                     </div>
                 </div>
             </div>

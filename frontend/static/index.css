@@ -11,3 +11,7 @@
 .fullHeight{
     height: 97%;
 }
+
+#locationSelector {
+    display: block;
+}
