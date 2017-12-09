@@ -2,7 +2,10 @@ package com.durafficpark.Traffic;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+
 import Jama.Matrix;
+import com.durafficpark.road.Node;
 import com.durafficpark.road.Road;
 
 public class Controller {
@@ -13,6 +16,9 @@ public class Controller {
 
     private float a,b,c;
     private float dt;
+
+    private double maxOffset = 150;
+    private int choiceLimit = 3;
 
     public Controller(float a, float b, float c, float dt){
         cars = new ArrayList<>();
@@ -26,18 +32,69 @@ public class Controller {
 
     private void runStep(){
         cars.parallelStream().forEach(car -> {
-            Car carInfront = getCarInfront(car);
-            double s = carInfront.pos.get(0, 0) - car.pos.get(0, 0) - carInfront.length;
-            car.pos.set(2, 0, F(car.pos.get(1,0), carInfront.pos.get(1,0), s));
+            Pair carInfront = getCarInfront(car);
+            double s = carInfront.offset + carInfront.car.pos.get(0, 0) - car.pos.get(0, 0) - carInfront.car.length;
+            car.pos.set(2, 0, F(car.pos.get(1,0), carInfront.car.pos.get(1,0), s));
         });
         applyMatrix();
     }
 
-    private Car getCarInfront(Car car){
-        //TODO get Car
+    private Pair getCarInfront(Car car){
         Road road = car.getRoad();
+        return getNextCarOnRoad(road, 0, car, new int[]{0});
+    }
+
+    private Pair getNextCarOnRoad(Road road, double offset, Car currentCar, int[] choiceCount){
+        if(offset > maxOffset){
+            return null;
+        }
         List<Car> cars = road.getCars();
-        return null;
+        double shortestDist = Double.MAX_VALUE;
+        Car closestCar = null;
+        for(Car car : cars){
+            double dist = offset + car.pos.get(1,0);
+            if(dist > currentCar.pos.get(1,0) && dist < shortestDist){
+                shortestDist = dist;
+                closestCar = car;
+            }
+        }
+        if(closestCar == null){
+            Road nextRoad = getNextRoad(road, currentCar, choiceCount);
+            return getNextCarOnRoad(nextRoad, offset + road.getDistance(), currentCar, choiceCount);
+        }
+        return new Pair(closestCar, offset);
+    }
+
+    private Road getNextRoad(Road road, Car currentCar, int[] choiceCount){
+        List<Road> roads = road.getEndNode().getAdjacentRoads();
+        if(roads.size() == 1){
+            return roads.get(0);
+        }else if(roads.size() == 0){
+            return null;
+        }
+        if(choiceCount[0] != 0){
+            return null;
+        }
+        choiceCount[0]++;
+        int choice = currentCar.getChoice();
+        if(choice == -1) {
+            choice = makeChoice(roads, road);
+            currentCar.setChoice(choice);
+        }
+        return roads.get(choice);
+    }
+
+    private int makeChoice(List<Road> roads, Road road){
+        Node startNode = road.getStartNode();
+        int size = roads.size();
+        int randomElement = 0;
+        for(int i = 0; i < choiceLimit; i++){
+            randomElement = (int)(Math.random() * size);
+            if(!roads.get(randomElement).getEndNode().equals(startNode)){
+                return randomElement;
+            }
+        }
+        return randomElement;
     }
 
     private double F(double v, double vFollowing, double s){
@@ -53,4 +110,12 @@ public class Controller {
         car.pos2 = M.times(car.pos);
     }
 
+    private class Pair{
+        private double offset;
+        private Car car;
+        private Pair(Car car, double offset){
+            this.car = car;
+            this.offset = offset;
+        }
+    }
 }
