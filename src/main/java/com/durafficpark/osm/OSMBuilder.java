@@ -1,8 +1,15 @@
 package com.durafficpark.osm;
 
+import com.mongodb.util.JSON;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 
 // creates an OSMObject using a json file / element
@@ -65,5 +72,27 @@ public class OSMBuilder {
             node.getTags().put((String) tagKey, tags.get(tagKey));
 
         return node;
+    }
+
+    public static ArrayList<JSONObject> parseFileDirty(){
+
+        ArrayList<JSONObject> jsonObjects = new ArrayList<>();
+        try {
+            File f = new File("/Users/georgeprice/Documents/GitHub/durafficpark/new_json.json");
+            BufferedReader br = new BufferedReader(new FileReader(f));
+            String line = null;
+            while ((line = br.readLine()) != null) {
+                JSONParser parser = new JSONParser();
+                JSONObject json = (JSONObject) parser.parse(line);
+                jsonObjects.add(json);
+            }
+        }
+        catch (IOException e){
+            System.err.println(e.getMessage());
+        }
+        catch (ParseException e){
+            System.err.println(e.getMessage());
+        }
+        return jsonObjects;
     }
 }

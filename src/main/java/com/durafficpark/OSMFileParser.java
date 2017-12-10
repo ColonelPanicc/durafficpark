@@ -31,7 +31,7 @@ public class OSMFileParser extends DefaultHandler {
         System.out.println("Starting parsing document");
 
         try {
-            bufferedWriter = new BufferedWriter(new FileWriter("osm_json.txt", true));
+            bufferedWriter = new BufferedWriter(new FileWriter("new_json.json", true));
 
             SAXParserFactory spf = SAXParserFactory.newInstance();
             spf.setNamespaceAware(true);
@@ -84,7 +84,15 @@ public class OSMFileParser extends DefaultHandler {
 
     public void saveObject(){
         try {
-            bufferedWriter.write(currentObject.getJSON().toJSONString()+"\n");
+            if(currentObject instanceof OSMWay){
+                if(currentObject.getTags().containsKey("highway") && !currentObject.getTags().get("highway").equals("path")){
+                    bufferedWriter.write(currentObject.getJSON().toJSONString()+"\n");
+                }
+            }
+            else if(currentObject instanceof OSMNode){
+                bufferedWriter.write(currentObject.getJSON().toJSONString()+"\n");
+            }
+
         }
         catch (IOException e){
             System.err.println(e.getMessage());
