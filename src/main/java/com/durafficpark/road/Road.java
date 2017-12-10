@@ -47,7 +47,7 @@ public class Road {
         this.distance = (double) jsonObject.get("distance");
         this.speedLimit = (double) jsonObject.get("speedLimit");
 
-        this.startNode.addRoad(endNode, distance, speedLimit);
+        this.startNode.addRoad(this);
 
         cars = new ArrayList<>();
     }

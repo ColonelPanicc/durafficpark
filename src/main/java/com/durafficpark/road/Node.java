@@ -32,6 +32,10 @@ public class Node {
         adjacentRoads.add(new Road(this, endNode, distance, speedLimit));
     }
 
+    public void addRoad(Road road){
+        adjacentRoads.add(road);
+    }
+
     public double getLatitude() {
         return latitude;
     }
