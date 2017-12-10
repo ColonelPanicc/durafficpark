@@ -63,7 +63,7 @@ public class BoundingBoxNodes {
 
 
     public static void main(String[] args) {
-        // BoundingBoxNodes bb = new BoundingBoxNodes();
-        // System.out.println(bb.getWithinBoundingBox(54.5, 54.8, -1.55, -1.57));
+        BoundingBoxNodes bb = new BoundingBoxNodes();
+        System.out.println(bb.getWithinBoundingBox(54.5, 54.8, -1.55, -1.57));
     }
 }

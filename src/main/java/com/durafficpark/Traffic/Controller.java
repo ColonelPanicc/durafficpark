@@ -34,23 +34,23 @@ public class Controller {
                 {0, 0, 0}});
 
         //TODO setup
-        //map = new Map(left, right, top, bottom);
+        map = new Map(-1.6016, -1.5445, 54.7831, 54.7609);
 
-        Node node1 = new Node(54.77, -1.57);
-        Node node2 = new Node(54.765, -1.58);
-        Node node3 = new Node(54.765, -1.56);
-        List<Road> roads = new ArrayList<>();
-        node1.addRoad(node2, 100, 13.4);
-        node2.addRoad(node3, 300, 13.4);
-        node2.addRoad(node3, 300, 13.4);
-        node2.addRoad(node3, 300, 13.4);
-        node3.addRoad(node1, 300, 13.4);
-        node3.addRoad(node1, 300, 13.4);
-        node3.addRoad(node1, 300, 13.4);
-        roads.addAll(node1.getAdjacentRoads());
-        roads.addAll(node2.getAdjacentRoads());
-        roads.addAll(node3.getAdjacentRoads());
-        map = new Map(roads);
+//        Node node1 = new Node(54.77, -1.57);
+//        Node node2 = new Node(54.765, -1.58);
+//        Node node3 = new Node(54.765, -1.56);
+//        List<Road> roads = new ArrayList<>();
+//        node1.addRoad(node2, 100, 13.4);
+//        node2.addRoad(node3, 300, 13.4);
+//        node2.addRoad(node3, 300, 13.4);
+//        node2.addRoad(node3, 300, 13.4);
+//        node3.addRoad(node1, 300, 13.4);
+//        node3.addRoad(node1, 300, 13.4);
+//        node3.addRoad(node1, 300, 13.4);
+//        roads.addAll(node1.getAdjacentRoads());
+//        roads.addAll(node2.getAdjacentRoads());
+//        roads.addAll(node3.getAdjacentRoads());
+//        map = new Map(roads);
 
         for (Road road : map.getAllRoads()) {
             double length = road.getDistance();
