@@ -40,8 +40,6 @@ io.on("connection", function(client) {
         	simServer.write(payload + '\n');
           var buffer = "";
           simServer.on('data', function(data) {
-          	console.log('Received: ' + data);
-
             buffer += data;
           });
           simServer.on('close', function() {
