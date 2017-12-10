@@ -1,5 +1,8 @@
 package com.durafficpark.road;
 
+import org.bson.Document;
+import org.json.simple.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +19,12 @@ public class Node {
     public Node(double lat, double lon){
         this.latitude = lat;
         this.longitude = lon;
+        adjacentRoads = new ArrayList<>();
+    }
+
+    public Node(Document nodeJSON){
+        this.latitude = (double) nodeJSON.get("latitude");
+        this.longitude = (double) nodeJSON.get("longitude");
         adjacentRoads = new ArrayList<>();
     }
 
