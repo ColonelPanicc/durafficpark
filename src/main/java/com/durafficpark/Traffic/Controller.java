@@ -17,18 +17,21 @@ public class Controller {
 
     private float a,b,c;
     private float dt;
+    private float saveGap, runtime;
 
     private double maxOffset = 150;
-    private int choiceLimit = 3;
 
-    public Controller(float a, float b, float c, float dt, float runtime, float saveGap, float density){
+    public Controller(float a, float b, float c, float dt, float runtime, float saveGap, float density) {
         cars = new ArrayList<>();
         this.a = a;
         this.b = b;
         this.c = c;
-        M = new Matrix(new double[][]{  {1, dt, dt*dt/2},
-                                        {0, 1, dt},
-                                        {0, 0, 0}});
+        this.runtime = runtime;
+        this.saveGap = saveGap;
+        this.dt = dt;
+        M = new Matrix(new double[][]{{1, dt, dt * dt / 2},
+                {0, 1, dt},
+                {0, 0, 0}});
 
         //TODO setup
         //map = new Map(left, right, top, bottom);
@@ -49,29 +52,36 @@ public class Controller {
         roads.addAll(node3.getAdjacentRoads());
         map = new Map(roads);
 
-        for(Road road: map.getAllRoads()){
+        for (Road road : map.getAllRoads()) {
             double length = road.getDistance();
-            int count = (int)(density * length);
-            for(int i = 0; i < count; i++){
+            int count = (int) (density * length);
+            for (int i = 0; i < count; i++) {
                 Car car = new Car(3, Math.random() * length, 0);
                 car.setRoad(road);
                 cars.add(car);
                 road.addCar(car);
             }
         }
+    }
 
+    public String[] run(){
+        List<String> strings = new ArrayList<>();
         float nextSave = saveGap;
         for(float f = 0; f < runtime; f += dt){
             runStep();
             if(f > nextSave){
                 nextSave += saveGap;
                 String frame = generateMapRepr(f);
+                strings.add(frame);
             }
         }
+        return strings.toArray(new String[strings.size()]);
     }
 
     public static void main(String[] args) {
-        new Controller(1, 3, 10, 0.8f, 10, 3, 0.01f);
+        Controller cont = new Controller(1, 3, 10, 0.8f, 10, 3, 0.01f);
+        System.out.println("constructed");
+        cont.run();
     }
 
     private String generateMapRepr(float time){
