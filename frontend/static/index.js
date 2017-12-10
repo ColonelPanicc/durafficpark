@@ -106,6 +106,7 @@ $(document).ready(function() {
 
     $("#start-simulation").on("click", function() {
         server.emit("sim-start", JSON.stringify(SIM_SETTINGS));
+        $('#loading-spinner').removeClass("hide");
     });
 
     server.on("sim-client-update", function(data) {
@@ -120,6 +121,7 @@ $(document).ready(function() {
             drawCurrentTimeframe();
 
             // enable timeline controls now we have frames for the timeline
+            $('#loading-spinner').addClass("hide");
             $("#btnSkipToStart").removeClass("disabled");
             $("#btnBackwardOne").removeClass("disabled");
             $("#btnPlayPause").removeClass("disabled");
