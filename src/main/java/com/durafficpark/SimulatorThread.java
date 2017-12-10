@@ -36,8 +36,7 @@ public class SimulatorThread extends Thread {
                     socket.close();
                     return;
                 } else {
-                    RunBasedOnJson job = new RunBasedOnJson(input);
-                    String output = job.process();
+                    String output = "stringtooutput";
                     String value = new String(output.getBytes("UTF-8"));
                     out.writeBytes(value);
                     out.flush();
