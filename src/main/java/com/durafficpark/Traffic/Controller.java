@@ -56,7 +56,7 @@ public class Controller {
             double length = road.getDistance();
             int count = (int) (density * length);
             for (int i = 0; i < count; i++) {
-                Car car = new Car(3, Math.random() * length, 0);
+                Car car = new Car(3, Math.random() * length, 10);
                 car.setRoad(road);
                 cars.add(car);
                 road.addCar(car);
@@ -79,7 +79,7 @@ public class Controller {
     }
 
     public static void main(String[] args) {
-        Controller cont = new Controller(1, 3, 10, 0.8f, 10, 3, 0.01f);
+        Controller cont = new Controller(1, 3, 10, 0.8f, 300, 15, 0.1f);
         System.out.println("constructed");
         cont.run();
     }
