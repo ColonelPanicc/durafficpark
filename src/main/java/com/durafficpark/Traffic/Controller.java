@@ -33,9 +33,9 @@ public class Controller {
         //TODO setup
         //map = new Map(left, right, top, bottom);
 
-        Node node1 = new Node();
-        Node node2 = new Node();
-        Node node3 = new Node();
+        Node node1 = new Node(54.77, -1.57);
+        Node node2 = new Node(54.765, -1.58);
+        Node node3 = new Node(54.765, -1.56);
         List<Road> roads = new ArrayList<>();
         roads.add(new Road(node1,node2, 100, 13.4));
         roads.add(new Road(node2,node3, 300, 13.4));
@@ -61,7 +61,7 @@ public class Controller {
             runStep();
             if(f > nextSave){
                 nextSave += saveGap;
-                generateMapRepr(f);
+                String frame = generateMapRepr(f);
             }
         }
     }
@@ -106,14 +106,15 @@ public class Controller {
             car.pos.set(2, 0, F(car.pos.get(1,0), carInfront.car.pos.get(1,0), s));
         });
         applyMatrix();
+        cars.parallelStream().forEach(Car::updatePosition);
     }
 
     private Pair getCarInfront(Car car){
         Road road = car.getRoad();
-        return getNextCarOnRoad(road, 0, car, new int[]{0});
+        return getNextCarOnRoad(road, 0, car, true);
     }
 
-    private Pair getNextCarOnRoad(Road road, double offset, Car currentCar, int[] choiceCount){
+    private Pair getNextCarOnRoad(Road road, double offset, Car currentCar, boolean choice){
         if(offset > maxOffset){
             return null;
         }
@@ -128,46 +129,50 @@ public class Controller {
             }
         }
         if(closestCar == null){
-            Road nextRoad = getNextRoad(road, currentCar, choiceCount);
+            Road nextRoad = currentCar.getNextRoad(road, choice);
             if(nextRoad == null){
                 return new Pair(new Car(currentCar.length, 0, currentCar.pos.get(1,0)), offset + road.getDistance());
             }
-            return getNextCarOnRoad(nextRoad, offset + road.getDistance(), currentCar, choiceCount);
+            if(nextRoad.choice) {
+                nextRoad.choice = false;
+                choice = false;
+            }
+            return getNextCarOnRoad(nextRoad, offset + road.getDistance(), currentCar, choice);
         }
         return new Pair(closestCar, offset);
     }
 
-    private Road getNextRoad(Road road, Car currentCar, int[] choiceCount){
-        List<Road> roads = road.getEndNode().getAdjacentRoads();
-        if(roads.size() == 1){
-            return roads.get(0);
-        }else if(roads.size() == 0){
-            return null;
-        }
-        if(choiceCount[0] != 0){
-            return null;
-        }
-        choiceCount[0]++;
-        int choice = currentCar.getChoice();
-        if(choice == -1) {
-            choice = makeChoice(roads, road);
-            currentCar.setChoice(choice);
-        }
-        return roads.get(choice);
-    }
+//    private Road getNextRoad(Road road, Car currentCar, int[] choiceCount){
+//        List<Road> roads = road.getEndNode().getAdjacentRoads();
+//        if(roads.size() == 1){
+//            return roads.get(0);
+//        }else if(roads.size() == 0){
+//            return null;
+//        }
+//        if(choiceCount[0] != 0){
+//            return null;
+//        }
+//        choiceCount[0]++;
+//        int choice = currentCar.getChoice();
+//        if(choice == -1) {
+//            choice = makeChoice(roads, road);
+//            currentCar.setChoice(choice);
+//        }
+//        return roads.get(choice);
+//    }
 
-    private int makeChoice(List<Road> roads, Road road){
-        Node startNode = road.getStartNode();
-        int size = roads.size();
-        int randomElement = 0;
-        for(int i = 0; i < choiceLimit; i++){
-            randomElement = (int)(Math.random() * size);
-            if(!roads.get(randomElement).getEndNode().equals(startNode)){
-                return randomElement;
-            }
-        }
-        return randomElement;
-    }
+//    private int makeChoice(List<Road> roads, Road road){
+//        Node startNode = road.getStartNode();
+//        int size = roads.size();
+//        int randomElement = 0;
+//        for(int i = 0; i < choiceLimit; i++){
+//            randomElement = (int)(Math.random() * size);
+//            if(!roads.get(randomElement).getEndNode().equals(startNode)){
+//                return randomElement;
+//            }
+//        }
+//        return randomElement;
+//    }
 
     private double F(double v, double vFollowing, double s){
         return a*(Math.abs(s) - (c * v)) + b*(vFollowing - v);

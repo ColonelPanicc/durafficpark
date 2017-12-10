@@ -20,6 +20,7 @@ public class Road {
     private Node endNode;    // the next node which this road ends at
     private double distance;    // the total length of the road, in metres
     private double speedLimit;  // the speed limit for this road, in m/s
+    public boolean choice = false;
 
     private ArrayList<Car> cars;
 
