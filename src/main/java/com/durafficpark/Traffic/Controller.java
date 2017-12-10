@@ -79,7 +79,7 @@ public class Controller {
     }
 
     public static void main(String[] args) {
-        Controller cont = new Controller(1, 3, 10, 0.8f, 300, 15, 0.1f);
+        Controller cont = new Controller(0.1f, 1, 3, 1f, 300, 15, 0.1f);
         System.out.println("constructed");
         cont.run();
     }
