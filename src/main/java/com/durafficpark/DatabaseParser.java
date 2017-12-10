@@ -37,7 +37,6 @@ public class DatabaseParser {
             // if we already have stored this osm node (matching lat and lon), then we just need to update...
             if(nodes.contains(startNode)){
                 startNode = nodes.get(nodes.indexOf(startNode));
-                // System.out.println("Node adjacent roads; "+startNode.getAdjacentRoads().size());
             }
 
             // otherwise, this is the first time we have processed this osm node and so we should save it
@@ -48,7 +47,6 @@ public class DatabaseParser {
             // same as above!
             if(nodes.contains(endNode)){
                 endNode = nodes.get(nodes.indexOf(endNode));
-                // System.out.println("Node adjacent roads; "+startNode.getAdjacentRoads().size());
             }
             else {
                 nodes.add(endNode);

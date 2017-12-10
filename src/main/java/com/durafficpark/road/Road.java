@@ -33,6 +33,26 @@ public class Road {
         startNode.addRoad(this);
     }
 
+    public JSONObject toJSON(){
+        JSONObject jsonObject = new JSONObject();
+
+        JSONObject startNodeJSON = new JSONObject();
+        startNodeJSON.put("latitude", startNode.getLatitude());
+        startNodeJSON.put("longitude", startNode.getLongitude());
+        jsonObject.put("startNode", startNodeJSON);
+
+        JSONObject endNodeJSON = new JSONObject();
+        endNodeJSON.put("latitude", endNode.getLatitude());
+        endNodeJSON.put("longitude", endNode.getLongitude());
+        jsonObject.put("endNode", endNodeJSON);
+
+        jsonObject.put("distance", distance);
+        jsonObject.put("speedLimit", speedLimit);
+        jsonObject.put("cars", "[]");
+
+        return jsonObject;
+    }
+
     /*
 
     // creates a road based on json data
