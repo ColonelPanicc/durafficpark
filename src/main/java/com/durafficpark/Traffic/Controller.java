@@ -7,6 +7,7 @@ import java.util.Random;
 import Jama.Matrix;
 import com.durafficpark.road.Node;
 import com.durafficpark.road.Road;
+import com.google.gson.Gson;
 
 public class Controller {
 
@@ -41,7 +42,27 @@ public class Controller {
         }
     }
 
-    private generateMapRepr(float time){
+    public static void main(String[] args) {
+        System.out.println("CONTROLLER MAIN");
+        Gson gson = new Gson();
+
+        float time = 125;
+        double[][] values = new double[3][5];
+        for(int i = 0; i < 3; i++){
+            values[i][0] = 0;
+            values[i][1] = 0;
+            values[i][2] = 0;
+            values[i][3] = 0;
+            values[i][4] = 0;
+        }
+        JsonOut j = new JsonOut(values, time);
+        System.out.println(gson.toJson(values));
+        System.out.println(gson.toJson(time));
+        System.out.println(gson.toJson(j));
+    }
+
+    private String generateMapRepr(float time){
+        Gson gson = new Gson();
         List<Road> roads = map.getAllRoads();
         double[][] values = new double[roads.size()][5];
         for(int i = 0; i < roads.size(); i++){
@@ -51,7 +72,7 @@ public class Controller {
             values[i][3] = roads.get(i).getEndNode().getLongitude();
             values[i][4] = roads.get(i).getTrafficDensity();
         }
-
+        return gson.toJson(new JsonOut(values, time));
     }
 
     private void runStep(){
