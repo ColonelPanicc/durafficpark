@@ -1,14 +1,11 @@
 package com.durafficpark.road;
 
-import com.durafficpark.Traffic.Map;
 import com.durafficpark.osm.OSMBuilder;
 import com.durafficpark.osm.OSMNode;
 import com.durafficpark.osm.OSMObject;
 import com.durafficpark.osm.OSMWay;
-import com.google.gson.Gson;
 import org.json.simple.JSONObject;
 
-import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;

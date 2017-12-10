@@ -1,4 +1,4 @@
-package com.durafficpark.Traffic;
+package com.durafficpark.traffic;
 
 import com.durafficpark.DatabaseParser;
 import com.durafficpark.road.Road;

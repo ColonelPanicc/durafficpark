@@ -1,11 +1,9 @@
-package com.durafficpark.Traffic;
+package com.durafficpark.traffic;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import Jama.Matrix;
-import com.durafficpark.road.Node;
 import com.durafficpark.road.Road;
 import com.google.gson.Gson;
 

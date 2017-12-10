@@ -1,15 +1,12 @@
 package com.durafficpark;
 
-import com.durafficpark.Traffic.Controller;
+import com.durafficpark.traffic.Controller;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.*;
-import java.net.ServerSocket;
 import java.net.Socket;
-import java.nio.charset.Charset;
 import java.util.HashMap;
-import java.util.stream.Collectors;
 
 public class SimulatorThread extends Thread {
     protected Socket socket;

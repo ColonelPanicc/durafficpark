@@ -1,17 +1,9 @@
 package com.durafficpark.road;
 
-import com.durafficpark.Traffic.Car;
-import com.durafficpark.osm.OSMBuilder;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import org.bson.Document;
-import org.json.simple.JSONArray;
+import com.durafficpark.traffic.Car;
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 // the distance to a specific node with the distance for it, start node is the node that holds this
 public class Road {
