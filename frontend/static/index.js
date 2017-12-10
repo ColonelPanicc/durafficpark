@@ -83,17 +83,18 @@ $(document).ready(function() {
     // Example timeframe drawing
     var timeframe = {
         heats: [
-            {
-                nodeA: corner1,
-                nodeB: center,
-                heat: 0.4
-            },
-            {
-                nodeA: corner2,
-                nodeB: center,
-                heat: 0.7
-            }
-        ]
+            [
+                corner1,
+                center,
+                0.4
+            ],
+            [
+                corner2,
+                center,
+                0.7
+            ]
+        ],
+        time : 100
     }
     drawTimeframe(timeframe);
 

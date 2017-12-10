@@ -20,7 +20,7 @@ public class Controller {
     private double maxOffset = 150;
     private int choiceLimit = 3;
 
-    public Controller(float a, float b, float c, float dt){
+    public Controller(float a, float b, float c, float dt, float runtime, float saveGap){
         cars = new ArrayList<>();
         this.a = a;
         this.b = b;
@@ -28,6 +28,30 @@ public class Controller {
         M = new Matrix(new double[][]{  {1, dt, dt*dt/2},
                                         {0, 1, dt},
                                         {0, 0, 0}});
+
+        //TODO setup
+
+        float nextSave = saveGap;
+        for(float f = 0; f < runtime; f += dt){
+            runStep();
+            if(f > nextSave){
+                nextSave += saveGap;
+                generateMapRepr(f);
+            }
+        }
+    }
+
+    private generateMapRepr(float time){
+        List<Road> roads = map.getAllRoads();
+        double[][] values = new double[roads.size()][5];
+        for(int i = 0; i < roads.size(); i++){
+            values[i][0] = roads.get(i).getStartNode().getLatitude();
+            values[i][1] = roads.get(i).getStartNode().getLongitude();
+            values[i][2] = roads.get(i).getEndNode().getLatitude();
+            values[i][3] = roads.get(i).getEndNode().getLongitude();
+            values[i][4] = roads.get(i).getTrafficDensity();
+        }
+
     }
 
     private void runStep(){

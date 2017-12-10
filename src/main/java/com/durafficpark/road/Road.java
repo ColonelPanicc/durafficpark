@@ -48,6 +48,14 @@ public class Road {
         cars = new ArrayList<>();
     }
 
+    public double getTrafficDensity(){
+        double totalLength = 0;
+        for(Car car : cars){
+            totalLength += car.getLength();
+        }
+        return totalLength/distance;
+    }
+
     public Node getStartNode() {
         return startNode;
     }
