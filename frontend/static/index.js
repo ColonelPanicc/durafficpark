@@ -1,7 +1,13 @@
 $(document).ready(function() {
     // Simulation Settings
     var SIM_SETTINGS = {
-
+        "dt": "0.8",
+        "runtime": "10",
+        "density": "0.1",
+        "saveGap": "3",
+        "a": "1",
+        "b": "3",
+        "c": "10"
     };
 
     // Domain and Socket IO stuff
@@ -180,4 +186,35 @@ $(document).ready(function() {
             paused = !paused;
         }
     });
+
+    $("#aInput").bind('keyup mouseup', function () {
+    SIM_SETTINGS['a'] =  $(this).val();
+    });
+    $("#bInput").bind('keyup mouseup', function () {
+    SIM_SETTINGS['b'] =  $(this).val();
+    });
+    $("#cInput").bind('keyup mouseup', function () {
+    SIM_SETTINGS['c'] = $(this).val();
+    });
+    $("#dt").bind('keyup mouseup', function () {
+    SIM_SETTINGS['dt'] =  $(this).val();
+    });
+    $("#density").bind('keyup mouseup', function () {
+    SIM_SETTINGS['density'] =  $(this).val();
+    });
+    $("#runtime").bind('keyup mouseup', function () {
+    SIM_SETTINGS['runtime'] =  $(this).val();
+    });
+    $("#savegap").bind('keyup mouseup', function () {
+    SIM_SETTINGS['saveGap'] =  $(this).val();
+    });
+
+
+    $('#aInput').val(SIM_SETTINGS['a']);
+    $('#bInput').val(SIM_SETTINGS['b']);
+    $('#cInput').val(SIM_SETTINGS['c']);
+    $('#dt').val(SIM_SETTINGS['dt']);
+    $('#density').val(SIM_SETTINGS['density']);
+    $('#runtime').val(SIM_SETTINGS['runtime']);
+    $('#savegap').val(SIM_SETTINGS['saveGap']);
 });

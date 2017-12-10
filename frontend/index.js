@@ -25,17 +25,16 @@ server.listen(app.get("port"), function() {
 
 
 function bundleRequestToSend(client, data) {
-    return JSON.stringify({
-      "client": client.id,
-    });
+    var newJSON = JSON.parse(data);
+    newJSON['client'] = client.id;
+    return JSON.stringify(newJSON);
 }
-
 // --------- Socket IO Stuff ------------
 io.on("connection", function(client) {
     client.on("sim-start", function(data) {
         var payload = bundleRequestToSend(client, data);
         // console.log("Sim start");
-        simServer.connect(4000, '127.0.0.1', function() {
+        simServer.connect(56428, '127.0.0.1', function() {
         	// console.log('Connected');
         	simServer.write(payload + '\n');
           var buffer = "";
