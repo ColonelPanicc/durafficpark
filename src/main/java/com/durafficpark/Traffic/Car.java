@@ -72,7 +72,7 @@ public class Car {
                 return null;
             }
             if(choice == -1){
-                makeChoice(roads.size());
+                choice = makeChoice(roads.size());
             }
             Road ret = roads.get(choice);
             ret.choice = true;
@@ -84,7 +84,7 @@ public class Car {
             return null;
         }
         if(choice == -1){
-            makeChoice(filtered.size());
+            choice = makeChoice(filtered.size());
         }
         Road ret = filtered.get(choice);
         ret.choice = true;

@@ -16,6 +16,7 @@ public class Node {
     public Node(double lat, double lon){
         this.latitude = lat;
         this.longitude = lon;
+        adjacentRoads = new ArrayList<>();
     }
 
     // returns an arraylist of the nodes which can be reached through adjacent roads
