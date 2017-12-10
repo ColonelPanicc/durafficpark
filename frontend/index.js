@@ -3,9 +3,9 @@ var path = require("path");
 var app = express();
 var server = require("http").Server(app);
 var io = require("socket.io").listen(server);
-var simulationServer = require('socket.io-client')('http://localhost:9010');
+var net = require("net");
 var currentDirectory = process.env.PORT ? process.cwd() : __dirname;
-
+var simServer = new net.Socket();
 app.set("port", process.env.PORT || 3000);
 
 app.use("/jquery", express.static(path.join(currentDirectory, "node_modules/jquery/dist")));
@@ -33,13 +33,15 @@ io.on("connection", function(client) {
     client.on("sim-start", function(data) {
         var payload = bundleRequestToSend(client, data);
         console.log("Sim start");
-        simulationServer.emit("sim-start", "lol");
-    });
-//});
+        simServer.connect(4000, '127.0.0.1', function() {
+        	console.log('Connected');
+        	simServer.write('Hello, server! Love, Client.\n');
 
-    client.on("test-return", function(data) {
-      console.log(data.client);
-      console.log("Server returns");
-      console.log(data);
+          simServer.on('data', function(data) {
+          	console.log('Received: ' + data);
+          	simServer.destroy(); // kill client after server's response
+          });
+        });
+
     });
 });
