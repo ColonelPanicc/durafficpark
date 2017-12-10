@@ -1,13 +1,13 @@
 $(document).ready(function() {
     // Simulation Settings
     var SIM_SETTINGS = {
-        "dt": "0.8",
-        "runtime": "10",
-        "density": "0.1",
-        "saveGap": "3",
-        "a": "1",
-        "b": "3",
-        "c": "10"
+        "dt": "1",
+        "runtime": "600",
+        "density": "0.27",
+        "saveGap": "20",
+        "a": "0.1",
+        "b": "1",
+        "c": "3"
     };
 
     // Domain and Socket IO stuff
@@ -106,6 +106,7 @@ $(document).ready(function() {
 
     $("#start-simulation").on("click", function() {
         server.emit("sim-start", JSON.stringify(SIM_SETTINGS));
+        $('#loading-spinner').removeClass("hide");
     });
 
     server.on("sim-client-update", function(data) {
@@ -120,6 +121,7 @@ $(document).ready(function() {
             drawCurrentTimeframe();
 
             // enable timeline controls now we have frames for the timeline
+            $('#loading-spinner').addClass("hide");
             $("#btnSkipToStart").removeClass("disabled");
             $("#btnBackwardOne").removeClass("disabled");
             $("#btnPlayPause").removeClass("disabled");
