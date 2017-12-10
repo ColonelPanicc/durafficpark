@@ -54,6 +54,7 @@ public class SimulatorThread extends Thread {
 //                System.out.println("Output:" + value);
                 out.write(value);
                 out.flush();
+                out.close();
             } catch (IOException e) {
                 e.printStackTrace();
                 return;
