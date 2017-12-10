@@ -34,6 +34,10 @@ public class Car {
         return choice;
     }
 
+    public double getLength(){
+        return length;
+    }
+
     protected void setChoice(int choice){
         this.choice = choice;
     }

@@ -7,6 +7,7 @@ import java.util.Random;
 import Jama.Matrix;
 import com.durafficpark.road.Node;
 import com.durafficpark.road.Road;
+import com.google.gson.Gson;
 
 public class Controller {
 
@@ -20,7 +21,7 @@ public class Controller {
     private double maxOffset = 150;
     private int choiceLimit = 3;
 
-    public Controller(float a, float b, float c, float dt){
+    public Controller(float a, float b, float c, float dt, float runtime, float saveGap, float density){
         cars = new ArrayList<>();
         this.a = a;
         this.b = b;
@@ -28,6 +29,74 @@ public class Controller {
         M = new Matrix(new double[][]{  {1, dt, dt*dt/2},
                                         {0, 1, dt},
                                         {0, 0, 0}});
+
+        //TODO setup
+        //map = new Map(left, right, top, bottom);
+
+        Node node1 = new Node();
+        Node node2 = new Node();
+        Node node3 = new Node();
+        List<Road> roads = new ArrayList<>();
+        roads.add(new Road(node1,node2, 100, 13.4));
+        roads.add(new Road(node2,node3, 300, 13.4));
+        roads.add(new Road(node2,node3, 300, 13.4));
+        roads.add(new Road(node2,node3, 300, 13.4));
+        roads.add(new Road(node3,node1, 300, 13.4));
+        roads.add(new Road(node3,node1, 300, 13.4));
+        roads.add(new Road(node3,node1, 300, 13.4));
+        map = new Map(roads);
+
+        for(Road road: map.getAllRoads()){
+            double length = road.getDistance();
+            int count = (int)(density * length);
+            for(int i = 0; i < count; i++){
+                Car car = new Car(3, Math.random() * length, 0);
+                cars.add(car);
+                road.addCar(car);
+            }
+        }
+
+        float nextSave = saveGap;
+        for(float f = 0; f < runtime; f += dt){
+            runStep();
+            if(f > nextSave){
+                nextSave += saveGap;
+                generateMapRepr(f);
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        System.out.println("CONTROLLER MAIN");
+        Gson gson = new Gson();
+
+        float time = 125;
+        double[][] values = new double[3][5];
+        for(int i = 0; i < 3; i++){
+            values[i][0] = 0;
+            values[i][1] = 0;
+            values[i][2] = 0;
+            values[i][3] = 0;
+            values[i][4] = 0;
+        }
+        JsonOut j = new JsonOut(values, time);
+        System.out.println(gson.toJson(values));
+        System.out.println(gson.toJson(time));
+        System.out.println(gson.toJson(j));
+    }
+
+    private String generateMapRepr(float time){
+        Gson gson = new Gson();
+        List<Road> roads = map.getAllRoads();
+        double[][] values = new double[roads.size()][5];
+        for(int i = 0; i < roads.size(); i++){
+            values[i][0] = roads.get(i).getStartNode().getLatitude();
+            values[i][1] = roads.get(i).getStartNode().getLongitude();
+            values[i][2] = roads.get(i).getEndNode().getLatitude();
+            values[i][3] = roads.get(i).getEndNode().getLongitude();
+            values[i][4] = roads.get(i).getTrafficDensity();
+        }
+        return gson.toJson(new JsonOut(values, time));
     }
 
     private void runStep(){
