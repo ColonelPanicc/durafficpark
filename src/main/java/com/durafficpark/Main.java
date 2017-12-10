@@ -13,7 +13,7 @@ class SomeResponse {
 }
 public class Main {
     public static void main(String args[]) throws IOException {
-        int PORT = 4000;
+        int PORT = 5000;
         ServerSocket serverSocket = null;
         Socket socket = null;
 
