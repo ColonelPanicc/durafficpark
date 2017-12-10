@@ -1,5 +1,8 @@
 package com.durafficpark.road;
 
+import org.bson.Document;
+import org.json.simple.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +22,12 @@ public class Node {
         adjacentRoads = new ArrayList<>();
     }
 
+    public Node(Document nodeJSON){
+        this.latitude = (double) nodeJSON.get("latitude");
+        this.longitude = (double) nodeJSON.get("longitude");
+        adjacentRoads = new ArrayList<>();
+    }
+
     // returns an arraylist of the nodes which can be reached through adjacent roads
     public ArrayList<Node> getAdjacentNodes(){
         ArrayList<Node> durNodes = new ArrayList<>();
@@ -26,10 +35,15 @@ public class Node {
             durNodes.add(road.getEndNode());
         return durNodes;
     }
-
+    /*
     // define and add a new road to the set of adjacent roads
     public void addRoad(Node endNode, double distance, double speedLimit){
         adjacentRoads.add(new Road(this, endNode, distance, speedLimit));
+    }
+    */
+
+    public void addRoad(Road road){
+        adjacentRoads.add(road);
     }
 
     public double getLatitude() {

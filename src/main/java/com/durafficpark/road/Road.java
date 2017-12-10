@@ -30,7 +30,10 @@ public class Road {
         this.distance = distance;
         this.speedLimit = speedLimit;
         cars = new ArrayList<>();
+        startNode.addRoad(this);
     }
+
+    /*
 
     // creates a road based on json data
     public Road(JSONObject jsonObject){
@@ -46,8 +49,11 @@ public class Road {
         this.distance = (double) jsonObject.get("distance");
         this.speedLimit = (double) jsonObject.get("speedLimit");
 
+        this.startNode.addRoad(this);
+
         cars = new ArrayList<>();
     }
+    */
 
     public double getTrafficDensity(){
         double totalLength = 0;
