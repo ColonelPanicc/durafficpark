@@ -60,6 +60,9 @@ public class Controller {
         }
         if(closestCar == null){
             Road nextRoad = getNextRoad(road, currentCar, choiceCount);
+            if(nextRoad == null){
+                return new Pair(new Car(currentCar.length, 0, currentCar.pos.get(1,0)), offset + road.getDistance());
+            }
             return getNextCarOnRoad(nextRoad, offset + road.getDistance(), currentCar, choiceCount);
         }
         return new Pair(closestCar, offset);
