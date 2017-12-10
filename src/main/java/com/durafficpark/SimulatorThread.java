@@ -46,7 +46,10 @@ public class SimulatorThread extends Thread {
                 int runtime = Integer.valueOf(inputs.get("runtime"));
                 int savegap = Integer.valueOf(inputs.get("saveGap"));
                 float density = Float.parseFloat(inputs.get("density"));
-                Controller cont = new Controller(1, 3, 10, dt, runtime, savegap, density);
+                float a = Float.parseFloat(inputs.get("a"));
+                float b = Float.parseFloat(inputs.get("b"));
+                float c = Float.parseFloat(inputs.get("c"));
+                Controller cont = new Controller(a, b, c, dt, runtime, savegap, density);
                 String[] things = cont.run();
                 String mapRepresentation = new Gson().toJson(things);
 //                System.out.println(input);
