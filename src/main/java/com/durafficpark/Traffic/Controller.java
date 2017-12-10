@@ -37,13 +37,16 @@ public class Controller {
         Node node2 = new Node(54.765, -1.58);
         Node node3 = new Node(54.765, -1.56);
         List<Road> roads = new ArrayList<>();
-        roads.add(new Road(node1,node2, 100, 13.4));
-        roads.add(new Road(node2,node3, 300, 13.4));
-        roads.add(new Road(node2,node3, 300, 13.4));
-        roads.add(new Road(node2,node3, 300, 13.4));
-        roads.add(new Road(node3,node1, 300, 13.4));
-        roads.add(new Road(node3,node1, 300, 13.4));
-        roads.add(new Road(node3,node1, 300, 13.4));
+        node1.addRoad(node2, 100, 13.4);
+        node2.addRoad(node3, 300, 13.4);
+        node2.addRoad(node3, 300, 13.4);
+        node2.addRoad(node3, 300, 13.4);
+        node3.addRoad(node1, 300, 13.4);
+        node3.addRoad(node1, 300, 13.4);
+        node3.addRoad(node1, 300, 13.4);
+        roads.addAll(node1.getAdjacentRoads());
+        roads.addAll(node2.getAdjacentRoads());
+        roads.addAll(node3.getAdjacentRoads());
         map = new Map(roads);
 
         for(Road road: map.getAllRoads()){
@@ -51,6 +54,7 @@ public class Controller {
             int count = (int)(density * length);
             for(int i = 0; i < count; i++){
                 Car car = new Car(3, Math.random() * length, 0);
+                car.setRoad(road);
                 cars.add(car);
                 road.addCar(car);
             }
@@ -67,22 +71,7 @@ public class Controller {
     }
 
     public static void main(String[] args) {
-        System.out.println("CONTROLLER MAIN");
-        Gson gson = new Gson();
-
-        float time = 125;
-        double[][] values = new double[3][5];
-        for(int i = 0; i < 3; i++){
-            values[i][0] = 0;
-            values[i][1] = 0;
-            values[i][2] = 0;
-            values[i][3] = 0;
-            values[i][4] = 0;
-        }
-        JsonOut j = new JsonOut(values, time);
-        System.out.println(gson.toJson(values));
-        System.out.println(gson.toJson(time));
-        System.out.println(gson.toJson(j));
+        new Controller(1, 3, 10, 0.8f, 10, 3, 0.01f);
     }
 
     private String generateMapRepr(float time){
@@ -116,7 +105,7 @@ public class Controller {
 
     private Pair getNextCarOnRoad(Road road, double offset, Car currentCar, boolean choice){
         if(offset > maxOffset){
-            return null;
+            return new Pair(new Car(currentCar.length, 0, currentCar.pos.get(1,0)), offset);
         }
         List<Car> cars = road.getCars();
         double shortestDist = Double.MAX_VALUE;
@@ -187,10 +176,10 @@ public class Controller {
         car.pos2 = M.times(car.pos);
     }
 
-    private class Pair{
-        private double offset;
-        private Car car;
-        private Pair(Car car, double offset){
+    protected class Pair{
+        protected double offset;
+        protected Car car;
+        protected Pair(Car car, double offset){
             this.car = car;
             this.offset = offset;
         }
