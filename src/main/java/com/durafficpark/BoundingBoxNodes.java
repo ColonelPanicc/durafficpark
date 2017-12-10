@@ -29,7 +29,7 @@ public class BoundingBoxNodes {
         this.database = mongoClient.getDatabase("durassic-park");
     }
 
-    public List<JSONObject> getWithinBoundingBox(double left, double right, double top, double bottom) {
+    public List<JSONObject> getWithinBoundingBox(double btm, double tp, double rght, double lft) {
         List<JSONObject> finalList = Collections.synchronizedList(new ArrayList<>());
 
         MongoCollection<Document> roadsNodes = this.database.getCollection("ollie_roads");
@@ -49,9 +49,9 @@ public class BoundingBoxNodes {
             }
         };
 
-        roadsNodes.find(and(gte("startNode.latitude", left), lte("startNode.latitude", right), gte("startNode.longitude", bottom), lte("startNode.longitude", top),
-                        gte("startNode.latitude", left), lte("startNode.latitude", right), gte("startNode.longitude", bottom), lte("startNode.longitude", top))).
-                        forEach(getBlock, callbackWhenFinished);
+        roadsNodes.find(and(gte("startNode.latitude", btm), lte("startNode.latitude", tp), gte("startNode.longitude", lft), lte("startNode.longitude", rght),
+                gte("endNode.latitude", btm), lte("endNode.latitude", tp), gte("endNode.longitude", lft), lte("endNode.longitude", rght))).
+                forEach(getBlock, callbackWhenFinished);
 
         try {
             latch.await();
@@ -60,7 +60,6 @@ public class BoundingBoxNodes {
         }
         return finalList;
     }
-
 
     public static void main(String[] args) {
         BoundingBoxNodes bb = new BoundingBoxNodes();
