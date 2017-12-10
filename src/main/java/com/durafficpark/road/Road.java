@@ -1,6 +1,14 @@
 package com.durafficpark.road;
 
 import com.durafficpark.Traffic.Car;
+import com.durafficpark.osm.OSMBuilder;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import org.bson.Document;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,6 +28,23 @@ public class Road {
         this.endNode = endNode;
         this.distance = distance;
         this.speedLimit = speedLimit;
+        cars = new ArrayList<>();
+    }
+
+    // creates a road based on json data
+    public Road(JSONObject jsonObject){
+        Document bsonStartNode = (Document) jsonObject.get("startNode");
+        Node startNode = new Node((double) bsonStartNode.get("latitude"), (double) bsonStartNode.get("longitude"));
+
+        Document bsonEndNode = (Document) jsonObject.get("endNode");
+        Node endNode = new Node((double) bsonEndNode.get("latitude"), (double) bsonEndNode.get("longitude"));
+
+        this.startNode = startNode;
+        this.endNode = endNode;
+
+        this.distance = (double) jsonObject.get("distance");
+        this.speedLimit = (double) jsonObject.get("speedLimit");
+
         cars = new ArrayList<>();
     }
 

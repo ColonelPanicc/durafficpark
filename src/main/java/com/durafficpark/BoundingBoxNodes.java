@@ -38,7 +38,6 @@ public class BoundingBoxNodes {
             @Override
             public void apply(final Document document) {
                 finalList.add(new JSONObject(document));
-                System.out.println(document.toJson());
             }
         };
 
@@ -46,7 +45,6 @@ public class BoundingBoxNodes {
         SingleResultCallback<Void> callbackWhenFinished = new SingleResultCallback<Void>() {
             @Override
             public void onResult(final Void result, final Throwable t) {
-                System.out.println("Query Done!");
                 latch.countDown();
             }
         };
@@ -65,7 +63,7 @@ public class BoundingBoxNodes {
 
 
     public static void main(String[] args) {
-        BoundingBoxNodes bb = new BoundingBoxNodes();
-        System.out.println(bb.getWithinBoundingBox(54.5, 54.8, -1.55, -1.57));
+        // BoundingBoxNodes bb = new BoundingBoxNodes();
+        // System.out.println(bb.getWithinBoundingBox(54.5, 54.8, -1.55, -1.57));
     }
 }
