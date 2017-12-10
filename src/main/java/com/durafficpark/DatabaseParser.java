@@ -32,7 +32,7 @@ public class DatabaseParser {
         for (JSONObject jsonObject: jsonObjects) {
 
             Node startNode = new Node((Document) jsonObject.get("startNode"));
-            Node endNode = new Node((Document) jsonObject.get("startNode"));
+            Node endNode = new Node((Document) jsonObject.get("endNode"));
 
             // if we already have stored this osm node (matching lat and lon), then we just need to update...
             if(nodes.contains(startNode)){
