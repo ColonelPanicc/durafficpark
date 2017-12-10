@@ -17,8 +17,8 @@ $(document).ready(function() {
     // Store polylines to be able to remove them later
     var polylines = [];
 
-    // Store a history of frametimes
-    var frametimes = [];
+    // Store a history of timeframes
+    var timeframes = [];
 
     // Initialise map element with location bounds
     var map = L.map("mapElement", {
@@ -67,10 +67,10 @@ $(document).ready(function() {
         polylines = [];
 
         // Define polylines for this timeframe
-        for (var i = 0; i < timeframe.heats.length; i++) {
-            var nodeA = [timeframe.heats[i][0], timeframe.heats[i][1]];
-            var nodeB = [timeframe.heats[i][2], timeframe.heats[i][3]];
-            var heat = timeframe.heats[i][4];
+        for (var i = 0; i < timeframe.values.length; i++) {
+            var nodeA = [timeframe.values[i][0], timeframe.values[i][1]];
+            var nodeB = [timeframe.values[i][2], timeframe.values[i][3]];
+            var heat = timeframe.values[i][4];
             polylines.push(drawHeat(nodeA, nodeB, heat));
         }
 
@@ -82,7 +82,7 @@ $(document).ready(function() {
 
     // Example timeframe drawing
     var timeframe = {
-        heats: [
+        values: [
             [
                 corner1.lat, corner1.lng,
                 center.lat, center.lng,
@@ -103,7 +103,11 @@ $(document).ready(function() {
     });
 
     server.on("sim-client-update", function(data) {
-        console.log("sim-client-update", data);
-        // TODO save received frametime(s) to history
+        var obj = JSON.parse(data);
+        for (var i = 0; i < obj.length; i++) {
+            timeframes[i] = JSON.parse(obj[i]);
+        }
+        console.log(timeframes);
+        drawTimeframe(timeframes[2]);
     });
 });
