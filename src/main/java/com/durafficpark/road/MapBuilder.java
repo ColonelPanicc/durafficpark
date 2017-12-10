@@ -109,9 +109,6 @@ public class MapBuilder {
                         nodes.add(bNode);
                     }
 
-                    // System.out.println(" > Node a; "+aNode);
-                    // System.out.println(" > Node b; "+bNode);
-
                     // calculate the distance between the two roads (using the haversine formula)
                     double roadDistance = calcDistance(aNode, bNode);
 
@@ -153,8 +150,7 @@ public class MapBuilder {
                     for (int j = 0; j < lanes; j++) {
                         Road road = new Road(aNode, bNode, roadDistance, speedLimit);
                         roads.add(road);
-                        String roadStr = gson.toJson(road);
-                        roadStrings.add(roadStr);
+                        roadStrings.add(gson.toJson(road));
 
                     }
 
@@ -163,8 +159,7 @@ public class MapBuilder {
                         for (int j = 0; j < lanes; j++) {
                             Road road = new Road(bNode, aNode, roadDistance, speedLimit);
                             roads.add(road);
-                            String roadStr = gson.toJson(road);
-                            roadStrings.add(roadStr);
+                            roadStrings.add(gson.toJson(road));
                         }
                     }
 
@@ -175,13 +170,14 @@ public class MapBuilder {
 
                         }
                     }
+                    counter++;
 
                 }
                 else {
                     System.out.println("[!] Could not find the Node as part of this way");
                 }
 
-                counter++;
+
             }
         }
 

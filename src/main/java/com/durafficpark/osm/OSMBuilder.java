@@ -23,6 +23,8 @@ public class OSMBuilder {
 
     // builds a single OSM object from a given json object
     public static OSMObject build(JSONObject jsonObject){
+        // System.out.println(" > Building osm object from; "+jsonObject);
+
         if(jsonObject.containsKey("nodes"))
             return buildWay(jsonObject);
         return buildNode(jsonObject);
@@ -30,6 +32,8 @@ public class OSMBuilder {
 
     // returns the equivalent osm way for the data in a json object
     private static OSMWay buildWay(JSONObject jsonObject){
+
+        // System.out.println(" > Building way from; "+jsonObject);
 
         // instantiate the way, using the id found in the json object
         OSMWay way = new OSMWay((String) jsonObject.get("id"));
@@ -47,9 +51,11 @@ public class OSMBuilder {
     // returns the equivalent osm node object for the data in a json object
     private static OSMNode buildNode(JSONObject jsonObject){
 
+        // System.out.println(" > Building node from; "+jsonObject);
+
         // instantiate the node, using the id, latitude, and longitude found in the json object
         OSMNode node = new OSMNode((String) jsonObject.get("id"),
-                (Double) jsonObject.get("latitude"), (Double) jsonObject.get("longitude"));
+                (Double) jsonObject.get("lat"), (Double) jsonObject.get("lon"));
 
         // get the json object for the node's tags
         JSONObject tags = (JSONObject) jsonObject.get("tags");
