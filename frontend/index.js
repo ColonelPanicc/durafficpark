@@ -45,7 +45,7 @@ io.on("connection", function(client) {
             var clientid = returnedInformation.client;
             var sendTo = io.to(clientid);
             console.log(client);
-            sendTo.emit("sim-client-update", data);
+            sendTo.emit("sim-client-update", returnedInformation.mapstuff);
           });
         });
 
