@@ -38,15 +38,19 @@ io.on("connection", function(client) {
         simServer.connect(4000, '127.0.0.1', function() {
         	// console.log('Connected');
         	simServer.write(payload + '\n');
-
+          var buffer = "";
           simServer.on('data', function(data) {
-          	// console.log('Received: ' + data);
-            var returnedInformation = JSON.parse(data);
+          	console.log('Received: ' + data);
+
+            buffer += data;
+          });
+          simServer.on('close', function() {
+            var returnedInformation = JSON.parse(buffer);
             var clientid = returnedInformation.client;
             var sendTo = io.to(clientid);
             // console.log(client);
             sendTo.emit("sim-client-update", returnedInformation.mapstuff);
-          });
+          })
         });
 
     });
