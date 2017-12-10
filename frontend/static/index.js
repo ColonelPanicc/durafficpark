@@ -68,9 +68,9 @@ $(document).ready(function() {
 
         // Define polylines for this timeframe
         for (var i = 0; i < timeframe.heats.length; i++) {
-            var nodeA = timeframe.heats[i].nodeA;
-            var nodeB = timeframe.heats[i].nodeB;
-            var heat = timeframe.heats[i].heat;
+            var nodeA = [timeframe.heats[i][0], timeframe.heats[i][1]];
+            var nodeB = [timeframe.heats[i][2], timeframe.heats[i][3]];
+            var heat = timeframe.heats[i][4];
             polylines.push(drawHeat(nodeA, nodeB, heat));
         }
 
@@ -83,16 +83,16 @@ $(document).ready(function() {
     // Example timeframe drawing
     var timeframe = {
         heats: [
-            {
-                nodeA: corner1,
-                nodeB: center,
-                heat: 0.4
-            },
-            {
-                nodeA: corner2,
-                nodeB: center,
-                heat: 0.7
-            }
+            [
+                corner1.lat, corner1.lng,
+                center.lat, center.lng,
+                0.4
+            ],
+            [
+                corner2.lat, corner2.lng,
+                center.lat, center.lng,
+                0.7
+            ]
         ]
     }
     drawTimeframe(timeframe);
