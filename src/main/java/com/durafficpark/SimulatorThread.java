@@ -1,5 +1,6 @@
 package com.durafficpark;
 
+import com.durafficpark.Traffic.Controller;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -40,11 +41,13 @@ public class SimulatorThread extends Thread {
                         input,
                         new TypeToken<HashMap<String, String>>(){}.getType()
                 );
+                Controller cont = new Controller(1, 3, 10, 0.8f, 10, 3, 0.01f);
+                String[] things = cont.run();
+                String mapRepresentation = new Gson().toJson(things);
                 System.out.println(input);
-                // todo delete this, as I think this is making it worse
                     HashMap<String, String> output = new HashMap<>();
                     output.put("client", inputs.get("client"));
-
+                    output.put("mapstuff", mapRepresentation);
                     String outputStr = new Gson().toJson(output);
 
                     String value = new String(outputStr.getBytes("UTF-8"));
