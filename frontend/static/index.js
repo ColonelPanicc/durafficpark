@@ -1,7 +1,10 @@
 $(document).ready(function() {
     // Simulation Settings
     var SIM_SETTINGS = {
-
+        "dt": "0.8",
+        "runtime": "10",
+        "density": "0.1",
+        "saveGap": "3"
     };
 
     // Domain and Socket IO stuff
