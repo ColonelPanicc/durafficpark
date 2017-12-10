@@ -17,7 +17,7 @@ import java.util.ArrayList;
 public class MapBuilder {
 
     public static void main(String args[]){
-        buildFromSource();
+        // buildFromSource();
     }
 
     public static ArrayList<Road> buildFromSource(){
