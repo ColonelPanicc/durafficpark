@@ -27,7 +27,7 @@ public class Road {
     public Road(Node startNode, Node endNode, double distance, double speedLimit){
         this.startNode = startNode;
         this.endNode = endNode;
-        this.distance = distance;
+        this.distance = distance * 1000;
         this.speedLimit = speedLimit;
         cars = new ArrayList<>();
         startNode.addRoad(this);
