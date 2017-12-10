@@ -47,6 +47,7 @@ io.on("connection", function(client) {
             var sendTo = io.to(clientid);
             // console.log(client);
             sendTo.emit("sim-client-update", returnedInformation.mapstuff);
+            buffer = "";
           })
         });
 
