@@ -35,7 +35,7 @@ io.on("connection", function(client) {
     client.on("sim-start", function(data) {
         var payload = bundleRequestToSend(client, data);
         // console.log("Sim start");
-        simServer.connect(5000, '0.0.0.0', function() {
+        simServer.connect(4000, '127.0.0.1', function() {
         	// console.log('Connected');
         	simServer.write(payload + '\n');
 
