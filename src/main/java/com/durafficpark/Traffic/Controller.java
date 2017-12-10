@@ -119,7 +119,7 @@ public class Controller {
         double shortestDist = Double.MAX_VALUE;
         Car closestCar = null;
         for(Car car : cars){
-            if(car == null) continue;g
+            if(car == null) continue;
             double dist = offset + car.pos.get(1,0);
             if(dist > currentCar.pos.get(1,0) && dist < shortestDist){
                 shortestDist = dist;
