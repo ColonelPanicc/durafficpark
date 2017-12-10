@@ -17,8 +17,11 @@ $(document).ready(function() {
     // Store polylines to be able to remove them later
     var polylines = [];
 
-    // Store a history of timeframes
+    // Store a history of timeframes and display info
     var timeframes = [];
+    var timeframeIndex = -1;
+    var paused = true;
+    var intervalID = -1;
 
     // Initialise map element with location bounds
     var map = L.map("mapElement", {
@@ -35,7 +38,11 @@ $(document).ready(function() {
     // Plot dataset enabled area (in palatine purple)
     var boundingRectangle = L.rectangle([
         corner1, corner2
-    ], {color: "#7E317B", fill:false, weight: 4}).addTo(map);
+    ], {
+        color: "#7E317B",
+        fill: false,
+        weight: 4
+    }).addTo(map);
 
     // On-road 'heatmap' drawing
     function drawHeat(nodeA, nodeB, heat) {
@@ -80,16 +87,91 @@ $(document).ready(function() {
         }
     }
 
+    function updateProgressBar() {
+        var percent = 100 * (timeframeIndex + 1) / timeframes.length;
+        $("#prgTimeframes").text("" + Math.round(percent) + "%");
+        $("#prgTimeframes").css("width", "" + percent + "%");
+    }
+
+    function drawCurrentTimeframe() {
+        drawTimeframe(timeframes[timeframeIndex]);
+        updateProgressBar();
+    }
+
     $("#start-simulation").on("click", function() {
         server.emit("sim-start", JSON.stringify(SIM_SETTINGS));
     });
 
     server.on("sim-client-update", function(data) {
         var obj = JSON.parse(data);
-        timeframes = [];
+        var newTimeframes = [];
         for (var i = 0; i < obj.length; i++) {
-            timeframes.push(JSON.parse(obj[i]));
+            newTimeframes.push(JSON.parse(obj[i]));
         }
-        drawTimeframe(timeframes[0]);
+        if (newTimeframes.length > 0) {
+            timeframes = newTimeframes;
+            timeframeIndex = 0;
+            drawCurrentTimeframe();
+
+            // enable timeline controls now we have frames for the timeline
+            $("#btnSkipToStart").removeClass("disabled");
+            $("#btnBackwardOne").removeClass("disabled");
+            $("#btnPlayPause").removeClass("disabled");
+            $("#btnForwardOne").removeClass("disabled");
+            $("#btnSkipToEnd").removeClass("disabled");
+        }
+    });
+
+    $("#btnForwardOne").on("click", function() {
+        if (!$(this).hasClass("disabled")) {
+            timeframeIndex = (timeframeIndex + 1) % timeframes.length;
+            drawCurrentTimeframe();
+        }
+    });
+
+    $("#btnBackwardOne").on("click", function() {
+        if (!$(this).hasClass("disabled")) {
+            timeframeIndex -= 1;
+            if (timeframeIndex < 0) {
+                timeframeIndex += timeframes.length;
+            }
+            drawCurrentTimeframe();
+        }
+    });
+
+    $("#btnSkipToStart").on("click", function() {
+        if (!$(this).hasClass("disabled")) {
+            timeframeIndex = 0;
+            drawCurrentTimeframe();
+        }
+    });
+
+    $("#btnSkipToEnd").on("click", function() {
+        if (!$(this).hasClass("disabled")) {
+            timeframeIndex = timeframes.length - 1;
+            drawCurrentTimeframe();
+        }
+    });
+
+    function autoUpdate() {
+        timeframeIndex = (timeframeIndex + 1) % timeframes.length;
+        drawCurrentTimeframe();
+    }
+
+    $("#btnPlayPause").on("click", function() {
+        if (!$(this).hasClass("disabled")) {
+            if (paused) {
+                intervalID = window.setInterval(autoUpdate, 1200);
+                $("#spanPlayPause").removeClass("glyphicon-play");
+                $("#spanPlayPause").addClass("glyphicon-pause");
+                $("#prgTimeframes").addClass("progress-bar-striped active");
+            } else {
+                window.clearInterval(intervalID);
+                $("#spanPlayPause").removeClass("glyphicon-pause");
+                $("#spanPlayPause").addClass("glyphicon-play");
+                $("#prgTimeframes").removeClass("progress-bar-striped active");
+            }
+            paused = !paused;
+        }
     });
 });

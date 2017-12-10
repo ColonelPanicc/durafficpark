@@ -8,12 +8,16 @@
     width: 97%;
 }
 
-#locationSelector {
+.display-block {
     display: block;
 }
 
 .fullHeight {
     height: 97%;
+}
+
+.margin-above {
+    margin-top: 45px;
 }
 
 .palatinate {
