@@ -35,11 +35,12 @@ public class Node {
             durNodes.add(road.getEndNode());
         return durNodes;
     }
-
+    /*
     // define and add a new road to the set of adjacent roads
     public void addRoad(Node endNode, double distance, double speedLimit){
         adjacentRoads.add(new Road(this, endNode, distance, speedLimit));
     }
+    */
 
     public void addRoad(Road road){
         adjacentRoads.add(road);
