@@ -95,4 +95,12 @@ public class Road {
     public void setCars(ArrayList<Car> cars) {
         this.cars = cars;
     }
+
+    public void addCar(Car car){
+        cars.add(car);
+    }
+
+    public void removeCar(Car car){
+        cars.remove(car);
+    }
 }

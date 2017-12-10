@@ -13,6 +13,10 @@ public class Map {
         roads = DatabaseParser.getBoxData(left, right, top, bottom);
     }
 
+    public Map(List<Road> roads){
+        this.roads = roads;
+    }
+
     public List<Road> getAllRoads(){
         return roads;
     }
