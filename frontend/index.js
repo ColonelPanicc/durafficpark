@@ -41,6 +41,11 @@ io.on("connection", function(client) {
 
           simServer.on('data', function(data) {
           	console.log('Received: ' + data);
+            var returnedInformation = JSON.parse(data);
+            var clientid = returnedInformation.client;
+            var sendTo = io.to(clientid);
+            console.log(client);
+            sendTo.emit("sim-client-update", data);
           });
         });
 
