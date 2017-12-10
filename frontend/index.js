@@ -34,17 +34,17 @@ function bundleRequestToSend(client, data) {
 io.on("connection", function(client) {
     client.on("sim-start", function(data) {
         var payload = bundleRequestToSend(client, data);
-        console.log("Sim start");
+        // console.log("Sim start");
         simServer.connect(4000, '127.0.0.1', function() {
-        	console.log('Connected');
+        	// console.log('Connected');
         	simServer.write(payload + '\n');
 
           simServer.on('data', function(data) {
-          	console.log('Received: ' + data);
+          	// console.log('Received: ' + data);
             var returnedInformation = JSON.parse(data);
             var clientid = returnedInformation.client;
             var sendTo = io.to(clientid);
-            console.log(client);
+            // console.log(client);
             sendTo.emit("sim-client-update", returnedInformation.mapstuff);
           });
         });

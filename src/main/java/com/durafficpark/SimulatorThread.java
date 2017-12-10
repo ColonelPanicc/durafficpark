@@ -36,24 +36,24 @@ public class SimulatorThread extends Thread {
             try {
                 System.out.println("Now process inputs");
                 input = brinp.readLine();
-                System.out.println(input);
+//                System.out.println(input);
                 HashMap<String, String> inputs = new Gson().fromJson(
                         input,
                         new TypeToken<HashMap<String, String>>(){}.getType()
                 );
-                Controller cont = new Controller(1, 3, 10, 0.8f, 10, 3, 0.01f);
+                Controller cont = new Controller(1, 3, 10, 0.8f, 10, 3, 0.1f);
                 String[] things = cont.run();
                 String mapRepresentation = new Gson().toJson(things);
-                System.out.println(input);
-                    HashMap<String, String> output = new HashMap<>();
-                    output.put("client", inputs.get("client"));
-                    output.put("mapstuff", mapRepresentation);
-                    String outputStr = new Gson().toJson(output);
+//                System.out.println(input);
+                HashMap<String, String> output = new HashMap<>();
+                output.put("client", inputs.get("client"));
+                output.put("mapstuff", mapRepresentation);
+                String outputStr = new Gson().toJson(output);
 
-                    String value = new String(outputStr.getBytes("UTF-8"));
-                    System.out.println("Output:" + value);
-                    out.write(value);
-                    out.flush();
+                String value = new String(outputStr.getBytes("UTF-8"));
+//                System.out.println("Output:" + value);
+                out.write(value);
+                out.flush();
             } catch (IOException e) {
                 e.printStackTrace();
                 return;

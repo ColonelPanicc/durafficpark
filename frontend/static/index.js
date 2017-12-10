@@ -80,34 +80,16 @@ $(document).ready(function() {
         }
     }
 
-    // Example timeframe drawing
-    var timeframe = {
-        values: [
-            [
-                corner1.lat, corner1.lng,
-                center.lat, center.lng,
-                0.4
-            ],
-            [
-                corner2.lat, corner2.lng,
-                center.lat, center.lng,
-                0.7
-            ]
-        ]
-    }
-    drawTimeframe(timeframe);
-
     $("#start-simulation").on("click", function() {
-        console.log("Start sim button clicked");
         server.emit("sim-start", JSON.stringify(SIM_SETTINGS));
     });
 
     server.on("sim-client-update", function(data) {
         var obj = JSON.parse(data);
+        timeframes = [];
         for (var i = 0; i < obj.length; i++) {
-            timeframes[i] = JSON.parse(obj[i]);
+            timeframes.push(JSON.parse(obj[i]));
         }
-        console.log(timeframes);
-        drawTimeframe(timeframes[2]);
+        drawTimeframe(timeframes[0]);
     });
 });
