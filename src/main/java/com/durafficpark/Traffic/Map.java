@@ -9,7 +9,7 @@ public class Map {
     private List<Road> roads;
 
     public Map(){
-        //TODO get roads from George
+        //TODO get roads from Sara
     }
 
     public List<Road> getRoadChoices(Road road){
