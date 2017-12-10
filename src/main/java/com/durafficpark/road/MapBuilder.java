@@ -1,10 +1,10 @@
 package com.durafficpark.road;
 
-import com.durafficpark.Traffic.Map;
+import com.durafficpark.osm.OSMBuilder;
 import com.durafficpark.osm.OSMNode;
 import com.durafficpark.osm.OSMObject;
 import com.durafficpark.osm.OSMWay;
-import com.google.gson.Gson;
+import org.json.simple.JSONObject;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -12,6 +12,29 @@ import java.util.ArrayList;
 
 // builds a full set of map data, using a defined set of osm object
 public class MapBuilder {
+
+    public static void main(String args[]){
+        // buildFromSource();
+    }
+
+    public static ArrayList<Road> buildFromSource(){
+        try {
+            ArrayList<JSONObject> jsonObjects = OSMBuilder.parseFileDirty();
+            ArrayList<OSMObject> osmObjects = OSMBuilder.buildAll(jsonObjects);
+
+            for(OSMObject osmObject : osmObjects){
+                System.out.println(osmObject.getJSON().toJSONString());
+            }
+
+            ArrayList<Road> roads = MapBuilder.buildMap(osmObjects);
+
+            return roads;
+        }
+        catch (Exception e){
+
+        }
+        return null;
+    }
 
     // produces a full set of nodes
     public static ArrayList<Road> buildMap(ArrayList<OSMObject> osmObjects){
@@ -50,12 +73,13 @@ public class MapBuilder {
         int counter = 0;
         int percentage = -1;
 
-        Gson gson = new Gson();
-
         FileWriter fileWriter = null;
 
+        System.out.println(" > Number of nodes; "+osmNodes.size());
+        System.out.println(" > Number of ways; "+osmWays.size());
+
         try {
-            fileWriter = new FileWriter("/Users/georgeprice/Documents/GitHub/durafficpark/ollie_roads.json");
+            fileWriter = new FileWriter("/Users/georgeprice/Documents/GitHub/durafficpark/ollie_roads_new.json");
         }
         catch (IOException e){
             System.err.println(e.getMessage());
@@ -71,7 +95,6 @@ public class MapBuilder {
 
             // get the ordered ways for the road
             ArrayList<String> wayNodes = way.getNodes();
-
 
             // iterate through all of the node ids in the way
             for (int i = 0; i < wayNodes.size()-1; i++) {
@@ -150,8 +173,9 @@ public class MapBuilder {
                     for (int j = 0; j < lanes; j++) {
                         Road road = new Road(aNode, bNode, roadDistance, speedLimit);
                         roads.add(road);
-                        roadStrings.add(gson.toJson(road));
-
+                        String howdy = road.toJSON().toJSONString();
+                        System.out.println(howdy);
+                        roadStrings.add(howdy);
                     }
 
                     // if it's two way, then we need to add the road going the other direction
@@ -159,7 +183,9 @@ public class MapBuilder {
                         for (int j = 0; j < lanes; j++) {
                             Road road = new Road(bNode, aNode, roadDistance, speedLimit);
                             roads.add(road);
-                            roadStrings.add(gson.toJson(road));
+                            String howdy = road.toJSON().toJSONString();
+                            System.out.println(howdy);
+                            roadStrings.add(howdy);
                         }
                     }
 
@@ -189,9 +215,12 @@ public class MapBuilder {
         }
 
         try {
-            fileWriter = new FileWriter("/Users/georgeprice/Documents/GitHub/durafficpark/ollie_nodes.json");
+            fileWriter = new FileWriter("/Users/georgeprice/Documents/GitHub/durafficpark/ollie_nodes_new.json");
             for (Node node: nodes) {
-                String roadStr = gson.toJson(node);
+                JSONObject object = new JSONObject();
+                object.put("latitude", node.getLatitude());
+                object.put("longitude", node.getLongitude());
+                String roadStr = object.toJSONString();
                 fileWriter.write(roadStr+"\n");
             }
         }
@@ -268,5 +297,4 @@ public class MapBuilder {
                 return node;
         return null;
     }
-
 }

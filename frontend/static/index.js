@@ -164,17 +164,23 @@ $(document).ready(function() {
     function autoUpdate() {
         timeframeIndex = (timeframeIndex + 1) % timeframes.length;
         drawCurrentTimeframe();
+        if (!paused) {
+            setTimeout(function() {
+                window.requestAnimationFrame(autoUpdate)
+            }, 1200);
+        }
     }
 
     $("#btnPlayPause").on("click", function() {
         if (!$(this).hasClass("disabled")) {
             if (paused) {
-                intervalID = window.setInterval(autoUpdate, 1200);
+                // intervalID = window.setInterval(autoUpdate, 1200);
+                window.requestAnimationFrame(autoUpdate)
                 $("#spanPlayPause").removeClass("glyphicon-play");
                 $("#spanPlayPause").addClass("glyphicon-pause");
                 $("#prgTimeframes").addClass("progress-bar-striped active");
             } else {
-                window.clearInterval(intervalID);
+                // window.clearInterval(intervalID);
                 $("#spanPlayPause").removeClass("glyphicon-pause");
                 $("#spanPlayPause").addClass("glyphicon-play");
                 $("#prgTimeframes").removeClass("progress-bar-striped active");

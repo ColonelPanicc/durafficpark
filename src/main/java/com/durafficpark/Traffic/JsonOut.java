@@ -1,4 +1,4 @@
-package com.durafficpark.Traffic;
+package com.durafficpark.traffic;
 
 class JsonOut {
 

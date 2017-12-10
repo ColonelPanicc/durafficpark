@@ -1,17 +1,9 @@
 package com.durafficpark.road;
 
-import com.durafficpark.Traffic.Car;
-import com.durafficpark.osm.OSMBuilder;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import org.bson.Document;
-import org.json.simple.JSONArray;
+import com.durafficpark.traffic.Car;
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 // the distance to a specific node with the distance for it, start node is the node that holds this
 public class Road {
@@ -27,10 +19,30 @@ public class Road {
     public Road(Node startNode, Node endNode, double distance, double speedLimit){
         this.startNode = startNode;
         this.endNode = endNode;
-        this.distance = distance;
+        this.distance = distance * 1000;
         this.speedLimit = speedLimit;
         cars = new ArrayList<>();
         startNode.addRoad(this);
+    }
+
+    public JSONObject toJSON(){
+        JSONObject jsonObject = new JSONObject();
+
+        JSONObject startNodeJSON = new JSONObject();
+        startNodeJSON.put("latitude", startNode.getLatitude());
+        startNodeJSON.put("longitude", startNode.getLongitude());
+        jsonObject.put("startNode", startNodeJSON);
+
+        JSONObject endNodeJSON = new JSONObject();
+        endNodeJSON.put("latitude", endNode.getLatitude());
+        endNodeJSON.put("longitude", endNode.getLongitude());
+        jsonObject.put("endNode", endNodeJSON);
+
+        jsonObject.put("distance", distance);
+        jsonObject.put("speedLimit", speedLimit);
+        jsonObject.put("cars", "[]");
+
+        return jsonObject;
     }
 
     /*
