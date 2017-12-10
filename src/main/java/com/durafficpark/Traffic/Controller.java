@@ -34,7 +34,7 @@ public class Controller {
                 {0, 0, 0}});
 
         //TODO setup
-        map = new Map(-1.6016, -1.5445, 54.7831, 54.7609);
+        map = new Map(54.7609, 54.7831, -1.5445, -1.6016);
 
 //        Node node1 = new Node(54.77, -1.57);
 //        Node node2 = new Node(54.765, -1.58);
