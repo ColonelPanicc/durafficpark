@@ -25,7 +25,9 @@ server.listen(app.get("port"), function() {
 
 
 function bundleRequestToSend(client, data) {
-    return "lol"
+    return JSON.stringify({
+      "client": client.id,
+    });
 }
 
 // --------- Socket IO Stuff ------------
@@ -35,11 +37,10 @@ io.on("connection", function(client) {
         console.log("Sim start");
         simServer.connect(4000, '127.0.0.1', function() {
         	console.log('Connected');
-        	simServer.write('Hello, server! Love, Client.\n');
+        	simServer.write(payload + '\n');
 
           simServer.on('data', function(data) {
           	console.log('Received: ' + data);
-          	simServer.destroy(); // kill client after server's response
           });
         });
 
