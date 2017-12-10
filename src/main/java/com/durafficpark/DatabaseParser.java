@@ -46,12 +46,12 @@ public class DatabaseParser {
             }
 
             // same as above!
-            if(nodes.contains(startNode)){
-                startNode = nodes.get(nodes.indexOf(startNode));
+            if(nodes.contains(endNode)){
+                endNode = nodes.get(nodes.indexOf(endNode));
                 // System.out.println("Node adjacent roads; "+startNode.getAdjacentRoads().size());
             }
             else {
-                nodes.add(startNode);
+                nodes.add(endNode);
             }
 
             double roadDistance = (double) jsonObject.get("distance");
