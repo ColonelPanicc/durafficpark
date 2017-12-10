@@ -11,6 +11,7 @@ public class Map {
 
     public Map(double left, double right, double top, double bottom){
         roads = DatabaseParser.getBoxData(left, right, top, bottom);
+        System.out.println(roads.size());
     }
 
     public Map(List<Road> roads){
