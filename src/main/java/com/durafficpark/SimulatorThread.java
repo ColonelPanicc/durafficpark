@@ -41,7 +41,15 @@ public class SimulatorThread extends Thread {
                         input,
                         new TypeToken<HashMap<String, String>>(){}.getType()
                 );
-                Controller cont = new Controller(1, 3, 10, 0.8f, 10, 3, 0.1f);
+                System.out.println(inputs);
+                float dt = Float.parseFloat(inputs.get("dt"));
+                int runtime = Integer.valueOf(inputs.get("runtime"));
+                int savegap = Integer.valueOf(inputs.get("saveGap"));
+                float density = Float.parseFloat(inputs.get("density"));
+                float a = Float.parseFloat(inputs.get("a"));
+                float b = Float.parseFloat(inputs.get("b"));
+                float c = Float.parseFloat(inputs.get("c"));
+                Controller cont = new Controller(a, b, c, dt, runtime, savegap, density);
                 String[] things = cont.run();
                 String mapRepresentation = new Gson().toJson(things);
 //                System.out.println(input);
