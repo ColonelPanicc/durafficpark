@@ -1,30 +1,37 @@
 package com.durafficpark;
 
-import com.corundumstudio.socketio.*;
 
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
+
+class SomeRequest {
+    public String text;
+}
+class SomeResponse {
+    public String text;
+}
 public class Main {
-    public static void main(String args[]) {
-        Configuration config = new Configuration();
-        config.setHostname("localhost");
-        config.setPort(9000);
-
-        SocketIOServer server = new SocketIOServer(config);
-
-        server.addEventListener("sim-start", ProcessCommandObject.class,
-                (client, command, ackRequest) -> {
-                    String jsonSettings = command.getJSONInput();
-                    System.out.println(jsonSettings);
-                    System.out.println("Java Server Start Simulation");
-                    client.sendEvent("test-return", jsonSettings);
-                });
+    public static void main(String args[]) throws IOException {
+        int PORT = 4000;
+        ServerSocket serverSocket = null;
+        Socket socket = null;
 
         try {
-            server.start();
-            Thread.sleep(Integer.MAX_VALUE);
-        } catch (InterruptedException e) {
+            serverSocket = new ServerSocket(PORT);
+        } catch (IOException e) {
             e.printStackTrace();
-        } finally {
-            server.stop();
+
+        }
+        while (true) {
+            try {
+                socket = serverSocket.accept();
+            } catch (IOException e) {
+                System.out.println("I/O error: " + e);
+            }
+            // new thread for a client
+            new SimulatorThread(socket).start();
         }
     }
-}
+
+    }
