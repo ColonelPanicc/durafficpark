@@ -49,7 +49,9 @@ public class Car {
         if(pos.get(0,0) > road.getDistance()){
             double position = pos.get(0,0);
             pos.set(0,0, position - road.getDistance());
+            road.removeCar(this);
             road = getNextRoad(road, true);
+            road.addCar(this);
             if(road.choice){
                 road.choice = false;
                 choice = -1;
