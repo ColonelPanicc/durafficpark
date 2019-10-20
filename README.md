@@ -5,7 +5,7 @@ Welcome to Duraffic Park.
 We've made traffic simulations so astounding that they'll capture the imagination
 of the entire planet.
 
-This is a product of [Oliver McLeod](https://github.com/OliMac1), [Ryan Collins](https://github.com/OhmGeek), [Mike Croall](https://github.com/MikeCroall), [George Price](https://github.com/GeorgePrice), and [Sara Chen](https://github.com/sara-h-chen). Built at Durhack, 2018.
+This is a product of [Oliver McLeod](https://github.com/OliMac1), [Ryan Collins](https://github.com/OhmGeek), [Mike Croall](https://github.com/MikeCroall), [George Price](https://github.com/GeorgePrice), and [Sara Chen](https://github.com/sara-h-chen). Built at Durhack 2017, by the Colonel Panicc team.
 
 ## Running the application
 First, you will want to run the Java worker. Using a terminal, navigate to the
